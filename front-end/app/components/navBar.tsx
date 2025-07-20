@@ -6,7 +6,7 @@ import { NavItemType } from "../utils/types";
 const navItems: NavItemType[] = [
   { name: "Home", link: "/" },
   { name: "Blog", link: "/blog" },
-  { name: "Captures", link: "/photos" },
+  { name: "Captures", link: "/captures" },
   { name: "Quick Bites", link: "/bites" },
   { name: "Contact", link: "/contact" },
 ];

@@ -1,7 +1,3 @@
-export enum ContentEnum {
-  Blog,
-  Bite,
-}
 export interface NavItemType {
   name: string;
   link: string;
@@ -14,11 +10,15 @@ export interface BlogCardType {
 }
 
 export interface ActivityType {
-  image:string;
-  desc:string;
+  image: string;
+  desc: string;
   uid: number;
-  content: ContentEnum;
-  title:string
+  content: string;
+  title: string;
   time: string;
   cont_id: number;
+  user?: {
+    name: string;
+    image: string;
+  };
 }

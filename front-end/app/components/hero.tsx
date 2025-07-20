@@ -44,7 +44,7 @@ export default function Hero() {
     },
   ];
   return (
-    <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mt-10 max-w-6xl mx-auto p-4">
+    <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mt-10 max-w-7xl mx-auto p-4">
       <div className="md:col-span-3 relative group overflow-hidden rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300">
         <div className="aspect-square md:aspect-[16/10] relative overflow-hidden">
           <Image

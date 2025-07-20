@@ -6,13 +6,15 @@ import (
 	v1 "backend/routes/api/v1"
 	"fmt"
 
+	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
 )
 
 func main() {
 	r := gin.Default()
+	r.Use(cors.Default())
 	db.ConnectToDb()
-	db.DB.AutoMigrate(models.User{})
+	db.DB.AutoMigrate(models.User{}, models.Posts{})
 	v1.RegisterRoutes(r)
 	fmt.Println("Server Is running In http://localhost:3001/")
 	r.Run(":3001")
