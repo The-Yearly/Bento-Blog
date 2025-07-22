@@ -27,20 +27,15 @@ const getBiteBg = (uid: number) => {
   return colors[uid % colors.length];
 };
 
-const BentoCard = ({
+export const BentoCard = ({
   activity,
-  aspectClass,
-  textSize,
 }: {
   activity: ActivityType;
-  aspectClass: string;
-  textSize: string;
 }) => {
   try {
-    if (activity.content === "Blog") {
-      console.log(activity.content, "as");
+    if (activity.content !== "Bite") {
       return (
-        <div className={`${aspectClass} relative overflow-hidden`}>
+        <div className="w-full h-full">
           <Image
             src={`https://picsum.photos/800/500?random=${activity.cont_id}`}
             alt={"Activity Image"}
@@ -48,38 +43,38 @@ const BentoCard = ({
             width={800}
             height={500}
           />
-          {aspectClass.includes("aspect-[18/12]") ? (
-            <>
-              <div className="absolute hidden md:block inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent pointer-events-none" />
-              <div className="absolute bottom-0 left-0 right-0 p-6 text-white">
-                <h2 className="text-sm md:text-3xl font-semibold md:font-bold mb-2 md:line-clamp-2">
-                  {activity.title}
-                </h2>
-                <p className="text-sm opacity-90">
-                  {formatTime(activity?.time || new Date().toISOString())}
+          <>
+            <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent pointer-events-none" />
+            <div className="absolute bottom-0 left-0 right-0 p-4 text-white">
+              <h3 className="text-md md:text-2xl font-bold line-clamp-2 mb-1">
+                {activity.title}
+              </h3>
+              <div className="flex flex-col text-md opacity-90">
+                <p>
+                  {new Date(activity.time).toLocaleDateString("en-US", {
+                    year: "numeric",
+                    month: "long",
+                    day: "numeric",
+                  })}
                 </p>
+                <div className="flex items-center">
+                  <p className="text-xs">
+                    {formatTime(activity?.time || new Date().toISOString())}
+                  </p>
+                  <span className="flex ml-2 items-center">
+                    <Heart className="w-3 h-3 mx-1 stroke-white hover:stroke-red-400 hover:fill-pink-400 transition-all duration-300" />
+                    <p className="text-xs">{activity.likes}</p>
+                  </span>
+                </div>
               </div>
-            </>
-          ) : (
-            <>
-              <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent pointer-events-none" />
-              <div className="absolute bottom-0 left-0 right-0 p-4 text-white">
-                <h3 className="font-semibold text-sm md:text-base line-clamp-2 mb-1">
-                  {activity.title}
-                </h3>
-                <p className="text-xs opacity-80">
-                  {formatTime(activity.time)}
-                </p>
-              </div>
-            </>
-          )}
+            </div>
+          </>
         </div>
       );
     } else {
-      console.log("HHE", activity.content);
       return (
         <div
-          className={`${aspectClass} relative overflow-hidden ${getBiteBg(activity.uid)} p-4 flex flex-col justify-between`}
+          className={`relative w-full h-full overflow-hidden ${getBiteBg(activity.uid)} p-4 flex flex-col justify-between`}
         >
           <div className="flex items-center mb-3">
             <div className="w-8 h-8 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center text-white font-semibold">
@@ -88,7 +83,9 @@ const BentoCard = ({
           </div>
 
           <div className="flex-1 flex items-center">
-            <p className={`text-white ${textSize} font-medium leading-relaxed`}>
+            <p
+              className={`text-white text-sm md:text-lg font-medium leading-relaxed`}
+            >
               {activity.desc}
             </p>
           </div>
@@ -96,8 +93,8 @@ const BentoCard = ({
           <div className="flex items-center justify-between mt-3 text-white/80">
             <div className="flex space-x-4 text-sm">
               <span className="flex items-center">
-                <Heart className="w-4 h-4 mx-1 stroke-white hover:stroke-pink-300 hover:fill-pink-300 transition-all duration-300" />
-                12
+                <Heart className="w-4 h-4 mx-1 stroke-white hover:stroke-red-400 hover:fill-pink-400 transition-all duration-300" />
+                {activity.likes}
               </span>
             </div>
           </div>
@@ -109,44 +106,36 @@ const BentoCard = ({
   }
 };
 
-export const BentoBox = ({
-  recentActivityData,
-}: {
-  recentActivityData: ActivityType[];
-}) => {
+export const BentoBox = ({ contents }: { contents: ActivityType[] }) => {
   return (
     <div className="grid grid-cols-1 md:grid-cols-4 gap-4 max-w-6xl mx-auto p-4">
-      {recentActivityData.map((activity, i) => {
+      {contents.map((content, i) => {
         const elements = [];
         const bento = (i + 1) % 5;
         if (bento === 1) {
           elements.push(
             <div
               key={i}
-              className="md:col-span-3 relative group overflow-hidden rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300 cursor-pointer"
+              className="md:col-span-3 aspect-[18/12] relative group overflow-hidden rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300 cursor-pointer"
             >
-              <BentoCard
-                activity={activity}
-                aspectClass="aspect-square md:aspect-[18/12]"
-                textSize="text-sm md:text-xl"
-              />
+              <div className="aspect-[18/12] relative overflow-hidden>">
+                <BentoCard activity={content} />
+              </div>
             </div>,
           );
         } else if (bento === 2) {
           elements.push(
-            <div key="group-2-3" className="space-y-3">
+            <div key={i} className="space-y-3">
               {[i, i + 1].map((j) => {
-                const item = recentActivityData[j];
+                const item = contents[j];
                 return (
                   <div
                     key={j}
                     className="relative group overflow-hidden rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300 cursor-pointer"
                   >
-                    <BentoCard
-                      activity={item}
-                      aspectClass="aspect-square"
-                      textSize="text-xs md:text-sm"
-                    />
+                    <div className="aspect-square relative overflow-hidden>">
+                      <BentoCard activity={item}/>
+                    </div>
                   </div>
                 );
               })}
@@ -157,17 +146,18 @@ export const BentoBox = ({
             <div key={i} className="md:col-span-4">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 {[i, i + 1].map((j) => {
-                  const item = recentActivityData[j];
+                  const item = contents[j];
                   return (
                     <div
                       key={j}
                       className="relative group overflow-hidden rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300 cursor-pointer"
                     >
-                      <BentoCard
-                        activity={item}
-                        aspectClass="aspect-[16/9]"
-                        textSize="text-sm md:text-base"
-                      />
+                      <div className="relative overflow-hidden aspect-[16/9]">
+                        <BentoCard
+                          activity={item}
+                          
+                        />
+                      </div>
                     </div>
                   );
                 })}

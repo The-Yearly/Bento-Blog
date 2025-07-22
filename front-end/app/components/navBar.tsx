@@ -2,33 +2,58 @@
 import { Menu } from "lucide-react";
 import { useState } from "react";
 import Link from "next/link";
-import { NavItemType } from "../utils/types";
-const navItems: NavItemType[] = [
-  { name: "Home", link: "/" },
-  { name: "Blog", link: "/blog" },
-  { name: "Captures", link: "/captures" },
-  { name: "Quick Bites", link: "/bites" },
-  { name: "Contact", link: "/contact" },
-];
-
+import { UserCircle } from "lucide-react";
+import { usePathname } from "next/navigation";
+const navDic = {
+  "/": "Home",
+  "/blog": "Blog",
+  "/captures": "Captures",
+  "/bites": "Quick Bites",
+  "/contact": "Contact",
+};
+const navItems = Object.keys(navDic);
 export default function NavBar() {
+  const pathName = usePathname();
+  console.log(pathName);
   const [isSideBarOpen, setIsSideBarOpen] = useState(false);
+  const [selected, setSelected] = useState(
+    navDic[pathName as keyof typeof navDic],
+  );
+
   return (
-    <div className="w-full mt-10 md:mt-15 flex justify-end md:justify-center ">
-      <>
+    <div className="w-full mt-10 md:mt-15 flex justify-between ">
+      <Link
+        href={"/"}
+        onClick={() => setSelected("Home")}
+        className="text-xl ml-5 text-slate-800 dark:text-white hover:text-neutral-600 transition-all duration-300 tracking-widest uppercase hover:tracking-wide"
+      >
+        Bento Blog
+      </Link>
+      <div>
         <ul className="hidden md:flex gap-6 md:gap-10 text-sm md:text-lg text-neutral-500 font-nunito">
           {navItems.map((item, i) => (
             <li key={i}>
               <Link
-                href={item.link}
-                className="relative px-2 py-1 transition-all duration-400  hover:text-white hover:after:w-full after:absolute after:left-0 after:-bottom-0.5 after:h-0.5 after:w-0 after:bg-neutral-300 after:transition-all after:duration-300"
+                onClick={() => setSelected(navDic[item as keyof typeof navDic])}
+                href={item}
+                className={`relative px-2 py-1 transition-all duration-400 hover:text-white 
+    after:absolute after:left-0  hover:tracking-widest after:-bottom-0.5 after:h-0.5 after:bg-neutral-300 after:transition-all after:duration-300
+    ${
+      selected === navDic[item as keyof typeof navDic]
+        ? "after:w-full text-white tracking-widest"
+        : "after:w-0 tracking-normal hover:after:w-full"
+    }`}
               >
-                {item.name}
+                {navDic[item as keyof typeof navDic]}
               </Link>
             </li>
           ))}
         </ul>
-      </>
+      </div>
+      <UserCircle
+        strokeWidth={1.1}
+        className="hidden w-10 h-10 mr-5 md:block"
+      />
       <Menu
         className="mr-5 block md:hidden"
         onClick={() => setIsSideBarOpen(true)}
@@ -36,14 +61,14 @@ export default function NavBar() {
       {isSideBarOpen && (
         <div className="fixed z-40 block md:hidden top-0 w-full min-h-screen">
           <div
-            className="bg-black/10 inset-0 absolute left-0 backdrop-blur-lg h-full w-full"
+            className="bg-black/10 inset-0 absolute left-0 backdrop-blur h-full w-full"
             onClick={() => setIsSideBarOpen(false)}
           />
           <div className="fixed bg-black w-64 h-full right-0">
             <ul className="text-lg px-5 mt-10 text-neutral-400 font-nunito space-y-5">
               {navItems.map((item, i) => (
                 <li key={i}>
-                  <Link href={item.link}>{item.name}</Link>
+                  <Link href={item}>{navDic[item as keyof typeof navDic]}</Link>
                 </li>
               ))}
             </ul>

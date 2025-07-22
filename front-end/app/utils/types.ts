@@ -1,14 +1,3 @@
-export interface NavItemType {
-  name: string;
-  link: string;
-}
-
-export interface BlogCardType {
-  title: string;
-  Image: string;
-  date: Date;
-}
-
 export interface ActivityType {
   image: string;
   desc: string;
@@ -17,6 +6,9 @@ export interface ActivityType {
   title: string;
   time: string;
   cont_id: number;
+  likes: number;
+  fav: string;
+  tags: string[];
   user?: {
     name: string;
     image: string;
