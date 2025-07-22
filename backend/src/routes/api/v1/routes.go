@@ -8,9 +8,7 @@ import (
 
 func RegisterRoutes(r *gin.Engine) {
 	router := r.Group("/api/v1")
-	router.GET("/ping", controllers_v1.Test1)
-	router.GET("/test", controllers_v1.Test2)
-	router.GET("/help", controllers_v1.Test3)
-	router.GET("/getPosts/:type", controllers_v1.GetBites)
+	router.GET("/getPosts/:type", controllers_v1.GetPosts)
+	router.GET("/getTop3Feat", controllers_v1.GetTop3Feat)
 	router.GET("/getRecentActivity", controllers_v1.GetRecents)
 }

@@ -7,6 +7,7 @@ toolchain go1.23.11
 require (
 	github.com/gin-contrib/cors v1.7.6
 	github.com/gin-gonic/gin v1.10.1
+	github.com/lib/pq v1.10.9
 	github.com/lpernett/godotenv v0.0.0-20230527005122-0de1d4c5ef5e
 	gorm.io/driver/postgres v1.6.0
 	gorm.io/gorm v1.30.0
