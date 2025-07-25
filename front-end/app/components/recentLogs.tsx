@@ -3,9 +3,19 @@ import { useEffect, useState } from "react";
 import { ActivityType } from "../utils/types";
 import { BentoBox } from "./BentoGrid";
 import axios from "axios";
+import BentoImageGrid from "./BenotImageGrid";
 export default function RecentActivity() {
   const [recentActivityData, setRecentActivity] = useState<ActivityType[]>([]);
   const [wait, setWait] = useState(false);
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth < 780);
+    };
+    handleResize();
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+  const [isMobile, setIsMobile] = useState(false);
   useEffect(() => {
     const fetchData = async () => {
       setWait(true);
@@ -23,8 +33,11 @@ export default function RecentActivity() {
         <p className="w-62 relative ml-5 px-3 tracking-widest py-2 text-xl font-mono text-white transition-all duration-300 hover:text-green-400 before:content-['▶'] before:absolute before:-left-8 before:top-1/2 before:-translate-y-1/2 before:text-green-500 before:opacity-0 before:transition-all before:duration-200 hover:before:opacity-60 hover:before:-left-6 after:absolute after:left-3 after:-bottom-0.5 after:h-px after:w-0 after:bg-green-400 after:transition-all after:duration-300 hover:after:w-36 ">
           Recent Activity
         </p>
-
-        <BentoBox contents={recentActivityData} />
+        {!isMobile ? (
+          <BentoBox contents={recentActivityData} />
+        ) : (
+          <BentoImageGrid contents={recentActivityData} />
+        )}
       </div>
     );
   }

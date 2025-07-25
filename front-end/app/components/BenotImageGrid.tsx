@@ -12,32 +12,38 @@ const getTime = (date: string) => {
 const BentoImageCard = ({ activity }: { activity: ActivityType }) => {
   try {
     return (
-      <div className="relative w-full h-full overflow-hidden rounded-lg group cursor-pointer shadow-lg hover:shadow-xl transition-all duration-300">
-        <Image
-          src={`https://picsum.photos/800/500?random=${activity.cont_id}`}
-          alt={activity.title}
-          className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500 ease-out"
-          width={800}
-          height={500}
-        />
+      <>
+        {activity.content != "Bite" ? (
+          <div className="relative w-full h-full overflow-hidden rounded-lg group cursor-pointer shadow-lg hover:shadow-xl transition-all duration-300">
+            <Image
+              src={`https://picsum.photos/800/500?random=${activity.cont_id}`}
+              alt={activity.title}
+              className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500 ease-out"
+              width={800}
+              height={500}
+            />
 
-        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-60 group-hover:opacity-80 transition-opacity duration-300" />
-        <div className="absolute bottom-0 left-0 right-0 p-4 text-white">
-          <div className="font-bold text-lg leading-tight line-clamp-2 mb-1 group-hover:text-white/90 transition-colors duration-200">
-            {activity.title}
+            <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-60 group-hover:opacity-80 transition-opacity duration-300" />
+            <div className="absolute bottom-0 left-0 right-0 p-4 text-white">
+              <div className="font-bold text-lg leading-tight line-clamp-2 mb-1 group-hover:text-white/90 transition-colors duration-200">
+                {activity.title}
+              </div>
+              <div className="flex items-center">
+                <p className="text-sm text-white/80 font-medium">
+                  {getTime(activity.time)}
+                </p>
+                <span className="flex ml-2 items-center">
+                  <Heart className="w-3 h-3 mx-1 stroke-white hover:stroke-red-400 hover:fill-pink-400 transition-all duration-300" />
+                  <p className="text-xs">{activity.likes}</p>
+                </span>
+              </div>
+            </div>
+            <div className="absolute inset-0 rounded-lg ring-2 ring-white/0 group-hover:ring-white/20 transition-all duration-300" />
           </div>
-          <div className="flex items-center">
-            <p className="text-sm text-white/80 font-medium">
-              {getTime(activity.time)}
-            </p>
-            <span className="flex ml-2 items-center">
-              <Heart className="w-3 h-3 mx-1 stroke-white hover:stroke-red-400 hover:fill-pink-400 transition-all duration-300" />
-              <p className="text-xs">{activity.likes}</p>
-            </span>
-          </div>
-        </div>
-        <div className="absolute inset-0 rounded-lg ring-2 ring-white/0 group-hover:ring-white/20 transition-all duration-300" />
-      </div>
+        ) : (
+          <BentoCard activity={activity} />
+        )}
+      </>
     );
   } catch {
     return <></>;
@@ -72,11 +78,11 @@ export default function BentoImageGrid({
                     key={`bite-${i}`}
                   >
                     <div className="aspect-[10/16]">
-{/* {(() => {
+                      {/* {(() => {
   const SelectedCard = CardVarients[content.content as keyof typeof CardVarients];
   return <SelectedCard activity={content}/>;
 })()} */}
- <BentoImageCard activity={content} />
+                      <BentoImageCard activity={content} />
                     </div>
                     {secondCapture && (
                       <div className="aspect-[10/16]">

@@ -27,11 +27,7 @@ const getBiteBg = (uid: number) => {
   return colors[uid % colors.length];
 };
 
-export const BentoCard = ({
-  activity,
-}: {
-  activity: ActivityType;
-}) => {
+export const BentoCard = ({ activity }: { activity: ActivityType }) => {
   try {
     if (activity.content !== "Bite") {
       return (
@@ -134,7 +130,7 @@ export const BentoBox = ({ contents }: { contents: ActivityType[] }) => {
                     className="relative group overflow-hidden rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300 cursor-pointer"
                   >
                     <div className="aspect-square relative overflow-hidden>">
-                      <BentoCard activity={item}/>
+                      <BentoCard activity={item} />
                     </div>
                   </div>
                 );
@@ -153,10 +149,7 @@ export const BentoBox = ({ contents }: { contents: ActivityType[] }) => {
                       className="relative group overflow-hidden rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300 cursor-pointer"
                     >
                       <div className="relative overflow-hidden aspect-[16/9]">
-                        <BentoCard
-                          activity={item}
-                          
-                        />
+                        <BentoCard activity={item} />
                       </div>
                     </div>
                   );

@@ -11,4 +11,5 @@ func RegisterRoutes(r *gin.Engine) {
 	router.GET("/getPosts/:type", controllers_v1.GetPosts)
 	router.GET("/getTop3Feat", controllers_v1.GetTop3Feat)
 	router.GET("/getRecentActivity", controllers_v1.GetRecents)
+	router.GET("/getPosts/:type/:id", controllers_v1.GetIndivitual)
 }

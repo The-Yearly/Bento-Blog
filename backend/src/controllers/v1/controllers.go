@@ -3,6 +3,8 @@ package controllers_v1
 import (
 	"backend/db"
 	"backend/models"
+	"net/http"
+	"strconv"
 	"time"
 
 	"github.com/gin-gonic/gin"
@@ -129,6 +131,50 @@ func GetTop3Feat(ctx *gin.Context) {
 		ctx.JSON(200, gin.H{
 			"message": "Success",
 			"data":    returnData,
+		})
+	}
+}
+
+func GetIndivitual(ctx *gin.Context) {
+	content := ctx.Param("type")
+	idStr := ctx.Param("id")
+	id, err := strconv.Atoi(idStr)
+	if err != nil {
+		ctx.JSON(http.StatusBadRequest, gin.H{"error": "Invalid ID"})
+		return
+	}
+	var posts []models.Posts
+	res := db.DB.Model(&posts).Preload("User").Where("content=? AND id=?", content, id).Order("time DESC").Find(&posts)
+	var post []returnPost
+	if res.Error == nil {
+		for _, g := range posts {
+			post = append(post, returnPost{
+				ID:      g.ID,
+				Uid:     g.User.ID,
+				Title:   g.Title,
+				Image:   g.Image,
+				Time:    g.Time,
+				Desc:    g.Desc,
+				Content: g.Content,
+				Likes:   g.Likes,
+				Fav:     g.Fav,
+				Tags:    g.Tags,
+				User: struct {
+					Name  string "json:\"name\""
+					Image string "json:\"image\""
+				}{
+					Name:  g.User.Name,
+					Image: g.User.Image,
+				},
+			})
+		}
+		ctx.JSON(200, gin.H{
+			"message": "Successfully Retrivied",
+			"data":    post,
+		})
+	} else {
+		ctx.JSON(500, gin.H{
+			"message": "Server Error",
 		})
 	}
 }
