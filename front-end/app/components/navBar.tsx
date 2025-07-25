@@ -7,8 +7,8 @@ import { usePathname } from "next/navigation";
 const navDic = {
   "/": "Home",
   "/blog": "Blog",
-  "/captures": "Captures",
-  "/bites": "Quick Bites",
+  "/image": "Captures",
+  "/bite": "Quick Bites",
   "/contact": "Contact",
 };
 const navItems = Object.keys(navDic);
@@ -25,7 +25,7 @@ export default function NavBar() {
       <Link
         href={"/"}
         onClick={() => setSelected("Home")}
-        className="text-xl ml-5 text-slate-800 dark:text-white hover:text-neutral-600 transition-all duration-300 tracking-widest uppercase hover:tracking-wide"
+        className="text-xl ml-5 outline-none text-slate-800 dark:text-white hover:text-neutral-600 transition-all duration-300 tracking-widest uppercase hover:tracking-wide"
       >
         Bento Blog
       </Link>
@@ -36,7 +36,7 @@ export default function NavBar() {
               <Link
                 onClick={() => setSelected(navDic[item as keyof typeof navDic])}
                 href={item}
-                className={`relative px-2 py-1 transition-all duration-400 hover:text-white 
+                className={`relative outline-none px-2 py-1 transition-all duration-400 hover:text-white 
     after:absolute after:left-0  hover:tracking-widest after:-bottom-0.5 after:h-0.5 after:bg-neutral-300 after:transition-all after:duration-300
     ${
       selected === navDic[item as keyof typeof navDic]

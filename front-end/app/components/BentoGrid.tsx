@@ -1,6 +1,7 @@
 import { ActivityType } from "../utils/types";
 import Image from "next/image";
 import { Heart } from "lucide-react";
+import Link from "next/link";
 const formatTime = (dateString: string) => {
   const date = new Date(dateString);
   const now = new Date();
@@ -31,6 +32,7 @@ export const BentoCard = ({ activity }: { activity: ActivityType }) => {
   try {
     if (activity.content !== "Bite") {
       return (
+           <Link href={"/"+activity.content.toLowerCase()+"/"+activity.cont_id}>
         <div className="w-full h-full">
           <Image
             src={`https://picsum.photos/800/500?random=${activity.cont_id}`}
@@ -66,11 +68,13 @@ export const BentoCard = ({ activity }: { activity: ActivityType }) => {
             </div>
           </>
         </div>
+        </Link>
       );
     } else {
       return (
+           <Link href={"/"+activity.content.toLowerCase()+"/"+activity.cont_id}>
         <div
-          className={`relative w-full h-full overflow-hidden ${getBiteBg(activity.uid)} p-4 flex flex-col justify-between`}
+          className={`relative w-full h-full overflow-hidden ${getBiteBg(activity.cont_id)} p-4 flex flex-col justify-between`}
         >
           <div className="flex items-center mb-3">
             <div className="w-8 h-8 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center text-white font-semibold">
@@ -95,6 +99,7 @@ export const BentoCard = ({ activity }: { activity: ActivityType }) => {
             </div>
           </div>
         </div>
+        </Link>
       );
     }
   } catch {

@@ -2,6 +2,7 @@ import Image from "next/image";
 import { ActivityType } from "../utils/types";
 import { Heart } from "lucide-react";
 import { BentoCard } from "./BentoGrid";
+import Link from "next/link";
 const getTime = (date: string) => {
   const datetime = new Date(date);
   const full = new Intl.DateTimeFormat("en-US", {
@@ -13,6 +14,7 @@ const BentoImageCard = ({ activity }: { activity: ActivityType }) => {
   try {
     return (
       <>
+      <Link href={"/"+activity.content.toLowerCase()+"/"+activity.cont_id}>
         {activity.content != "Bite" ? (
           <div className="relative w-full h-full overflow-hidden rounded-lg group cursor-pointer shadow-lg hover:shadow-xl transition-all duration-300">
             <Image
@@ -43,6 +45,7 @@ const BentoImageCard = ({ activity }: { activity: ActivityType }) => {
         ) : (
           <BentoCard activity={activity} />
         )}
+        </Link>
       </>
     );
   } catch {
@@ -56,11 +59,6 @@ export default function BentoImageGrid({
 }) {
   const safeGetCapture = (index: number) => {
     return index < contents.length ? contents[index] : null;
-  };
-  const CardVarients = {
-    Blog: BentoImageCard,
-    Image: BentoImageCard,
-    Bite: BentoCard,
   };
   return (
     <div>
@@ -78,10 +76,6 @@ export default function BentoImageGrid({
                     key={`bite-${i}`}
                   >
                     <div className="aspect-[10/16]">
-                      {/* {(() => {
-  const SelectedCard = CardVarients[content.content as keyof typeof CardVarients];
-  return <SelectedCard activity={content}/>;
-})()} */}
                       <BentoImageCard activity={content} />
                     </div>
                     {secondCapture && (

@@ -186,7 +186,6 @@ export default function DeveloperActivityFeed() {
                   )}
                 </AnimatePresence>
 
-                {/* Show more/less button */}
                 {allTags.length > 5 && (
                   <motion.button
                     onClick={toggleShowAllTags}

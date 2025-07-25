@@ -28,7 +28,6 @@ export default function IndividualBlogPage() {
         const res = await axios.get(
           `${process.env.NEXT_PUBLIC_BACKEND_URL}/getPosts/Blog/${blogId}`
         );
-        console.log(`${process.env.NEXT_PUBLIC_BACKEND_URL}/getPosts/Blog/${blogId}`)
         setBlog(res.data.data[0]);
         console.log(res.data.data[0])
         setError(null);
@@ -100,7 +99,7 @@ export default function IndividualBlogPage() {
             Back to posts
           </button>
         </motion.div>
-        <motion.article
+        <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.1 }}
@@ -219,7 +218,7 @@ export default function IndividualBlogPage() {
               </motion.div>
             )}
           </div>
-        </motion.article>
+        </motion.div>
       </div>
     </div>
   );
