@@ -129,7 +129,7 @@ INSERT INTO posts (uid, title, image, time, "desc", content, likes, fav, tags) V
 (3, 'Coastal Lighthouse', 'https://example.com/images/lighthouse.jpg', '2025-07-09T07:40:00Z', 'Historic beacon standing tall', 'Image', 87, true, ARRAY['lighthouse', 'coastal', 'historic', 'beacon']),
 
 -- Blogs (15 entries)
-(2, 'The Art of Minimalism in Web Design', NULL, '2025-07-23T14:20:00Z', 'Exploring the principles of clean, minimal design', 'Blog', 128, false, ARRAY['design', 'web', 'minimalism', 'ui']),
+(2, 'The Art of Minimalism in Web Design', NULL, '2025-07-23T14:20:00Z', '<h1>Exploring the principles of clean, minimal design<h1><br><p>Hi</p>', 'Blog', 128, false, ARRAY['design', 'web', 'minimalism', 'ui']),
 (5, 'Building Scalable APIs with Go', NULL, '2025-07-22T10:30:00Z', 'Best practices for creating robust backend services', 'Blog', 245, true, ARRAY['golang', 'api', 'backend', 'scalability']),
 (1, 'Understanding Machine Learning Fundamentals', NULL, '2025-07-21T16:45:00Z', 'A beginners guide to ML concepts and algorithms', 'Blog', 167, false, ARRAY['ml', 'ai', 'algorithms', 'beginner']),
 (3, 'The Future of Remote Work', NULL, '2025-07-20T09:15:00Z', 'How distributed teams are reshaping the workplace', 'Blog', 89, true, ARRAY['remote', 'work', 'future', 'productivity']),
