@@ -3,16 +3,16 @@ import { useState, useEffect } from "react";
 import { useParams, useRouter } from "next/navigation";
 import { ActivityType } from "@/app/utils/types";
 import axios from "axios";
-import { 
-  ArrowLeft, 
+import {
+  ArrowLeft,
   X,
-  Calendar, 
-  Heart, 
-  Tag, 
-  User, 
-  ZoomIn, 
+  Calendar,
+  Heart,
+  Tag,
+  User,
+  ZoomIn,
   ZoomOut,
-  Eye
+  Eye,
 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 
@@ -24,7 +24,7 @@ export default function IndividualImagePage() {
   const [imageLoaded, setImageLoaded] = useState(false);
   const params = useParams();
   const router = useRouter();
-  
+
   const imageId = params?.id;
 
   useEffect(() => {
@@ -38,7 +38,7 @@ export default function IndividualImagePage() {
       try {
         setLoading(true);
         const response = await axios.get(
-          `${process.env.NEXT_PUBLIC_BACKEND_URL}/getPosts/Image/${imageId}`
+          `${process.env.NEXT_PUBLIC_BACKEND_URL}/getPosts/Image/${imageId}`,
         );
         setImage(response.data.data[0]);
         setError(null);
@@ -69,8 +69,6 @@ export default function IndividualImagePage() {
       return dateString;
     }
   };
-
-  
 
   const toggleZoom = () => {
     setIsZoomed(!isZoomed);
@@ -125,17 +123,16 @@ export default function IndividualImagePage() {
             className="lg:col-span-2"
           >
             <div className="bg-white rounded-xl shadow-lg overflow-hidden">
-              
               <div className="relative bg-black/50 backdrop-blur-2xl">
                 <motion.img
                   src={`https://picsum.photos/800/500?random=${image.cont_id}`}
                   alt={image.title}
                   className={`w-full transition-transform duration-300 cursor-pointer ${
-                    isZoomed ? 'scale-150 origin-center' : 'scale-100'
+                    isZoomed ? "scale-150 origin-center" : "scale-100"
                   }`}
                   style={{
-                    maxHeight: isZoomed ? 'none' : '70vh',
-                    objectFit: 'contain'
+                    maxHeight: isZoomed ? "none" : "70vh",
+                    objectFit: "contain",
                   }}
                   onClick={toggleZoom}
                   onLoad={() => setImageLoaded(true)}
@@ -149,9 +146,12 @@ export default function IndividualImagePage() {
                     className="p-2 bg-black bg-opacity-50 text-white rounded-lg hover:bg-opacity-70 transition-all"
                     title={isZoomed ? "Zoom out" : "Zoom in"}
                   >
-                    {isZoomed ? <ZoomOut className="w-4 h-4" /> : <ZoomIn className="w-4 h-4" />}
+                    {isZoomed ? (
+                      <ZoomOut className="w-4 h-4" />
+                    ) : (
+                      <ZoomIn className="w-4 h-4" />
+                    )}
                   </button>
-
                 </div>
                 {!imageLoaded && (
                   <div className="absolute inset-0 flex items-center justify-center">
@@ -169,7 +169,6 @@ export default function IndividualImagePage() {
             className="lg:col-span-1"
           >
             <div className="bg-white rounded-xl shadow-lg p-6 space-y-6">
-
               <motion.h1
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
@@ -218,7 +217,9 @@ export default function IndividualImagePage() {
                   transition={{ duration: 0.5, delay: 0.5 }}
                   className="border-t pt-6"
                 >
-                  <h3 className="text-lg font-semibold text-gray-900 mb-3">Description</h3>
+                  <h3 className="text-lg font-semibold text-gray-900 mb-3">
+                    Description
+                  </h3>
                   <p className="text-gray-700 leading-relaxed">{image.desc}</p>
                 </motion.div>
               )}
@@ -231,7 +232,9 @@ export default function IndividualImagePage() {
                 >
                   <div className="flex items-center gap-2 mb-3">
                     <Tag className="w-4 h-4 text-gray-600" />
-                    <span className="text-lg font-semibold text-gray-900">Tags</span>
+                    <span className="text-lg font-semibold text-gray-900">
+                      Tags
+                    </span>
                   </div>
                   <div className="flex flex-wrap gap-2">
                     {image.tags.map((tag, index) => (
@@ -259,7 +262,9 @@ export default function IndividualImagePage() {
                   transition={{ duration: 0.5, delay: 0.7 }}
                   className="border-t pt-6"
                 >
-                  <h3 className="text-lg font-semibold text-gray-900 mb-3">Author</h3>
+                  <h3 className="text-lg font-semibold text-gray-900 mb-3">
+                    Author
+                  </h3>
                   <div className="flex items-center gap-4">
                     {image.user.image && (
                       <img
@@ -284,13 +289,15 @@ export default function IndividualImagePage() {
                 transition={{ duration: 0.5, delay: 0.8 }}
                 className="border-t pt-6 space-y-3"
               >
-            
-                
                 <button
                   onClick={toggleZoom}
                   className="w-full flex items-center justify-center gap-2 px-4 py-3 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 transition-colors font-medium"
                 >
-                  {isZoomed ? <ZoomOut className="w-4 h-4" /> : <ZoomIn className="w-4 h-4" />}
+                  {isZoomed ? (
+                    <ZoomOut className="w-4 h-4" />
+                  ) : (
+                    <ZoomIn className="w-4 h-4" />
+                  )}
                   {isZoomed ? "Zoom Out" : "Zoom In"}
                 </button>
               </motion.div>

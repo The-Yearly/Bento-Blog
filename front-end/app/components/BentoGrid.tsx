@@ -32,73 +32,77 @@ export const BentoCard = ({ activity }: { activity: ActivityType }) => {
   try {
     if (activity.content !== "Bite") {
       return (
-           <Link href={"/"+activity.content.toLowerCase()+"/"+activity.cont_id}>
-        <div className="w-full h-full">
-          <Image
-            src={`https://picsum.photos/800/500?random=${activity.cont_id}`}
-            alt={"Activity Image"}
-            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-            width={800}
-            height={500}
-          />
-          <>
-            <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent pointer-events-none" />
-            <div className="absolute bottom-0 left-0 right-0 p-4 text-white">
-              <h3 className="text-md md:text-2xl font-bold line-clamp-2 mb-1">
-                {activity.title}
-              </h3>
-              <div className="flex flex-col text-md opacity-90">
-                <p>
-                  {new Date(activity.time).toLocaleDateString("en-US", {
-                    year: "numeric",
-                    month: "long",
-                    day: "numeric",
-                  })}
-                </p>
-                <div className="flex items-center">
-                  <p className="text-xs">
-                    {formatTime(activity?.time || new Date().toISOString())}
+        <Link
+          href={"/" + activity.content.toLowerCase() + "/" + activity.cont_id}
+        >
+          <div className="w-full h-full">
+            <Image
+              src={`https://picsum.photos/800/500?random=${activity.cont_id}`}
+              alt={"Activity Image"}
+              className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+              width={800}
+              height={500}
+            />
+            <>
+              <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent pointer-events-none" />
+              <div className="absolute bottom-0 left-0 right-0 p-4 text-white">
+                <h3 className="text-md md:text-2xl font-bold line-clamp-2 mb-1">
+                  {activity.title}
+                </h3>
+                <div className="flex flex-col text-md opacity-90">
+                  <p>
+                    {new Date(activity.time || "").toLocaleDateString("en-US", {
+                      year: "numeric",
+                      month: "long",
+                      day: "numeric",
+                    })}
                   </p>
-                  <span className="flex ml-2 items-center">
-                    <Heart className="w-3 h-3 mx-1 stroke-white hover:stroke-red-400 hover:fill-pink-400 transition-all duration-300" />
-                    <p className="text-xs">{activity.likes}</p>
-                  </span>
+                  <div className="flex items-center">
+                    <p className="text-xs">
+                      {formatTime(activity?.time || new Date().toISOString())}
+                    </p>
+                    <span className="flex ml-2 items-center">
+                      <Heart className="w-3 h-3 mx-1 stroke-white hover:stroke-red-400 hover:fill-pink-400 transition-all duration-300" />
+                      <p className="text-xs">{activity.likes}</p>
+                    </span>
+                  </div>
                 </div>
               </div>
-            </div>
-          </>
-        </div>
+            </>
+          </div>
         </Link>
       );
     } else {
       return (
-           <Link href={"/"+activity.content.toLowerCase()+"/"+activity.cont_id}>
-        <div
-          className={`relative w-full h-full overflow-hidden ${getBiteBg(activity.cont_id)} p-4 flex flex-col justify-between`}
+        <Link
+          href={"/" + activity.content.toLowerCase() + "/" + activity.cont_id}
         >
-          <div className="flex items-center mb-3">
-            <div className="w-8 h-8 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center text-white font-semibold">
-              {activity.uid}
+          <div
+            className={`relative w-full h-full overflow-hidden ${getBiteBg(activity.cont_id || 0)} p-4 flex flex-col justify-between`}
+          >
+            <div className="flex items-center mb-3">
+              <div className="w-8 h-8 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center text-white font-semibold">
+                {activity.uid}
+              </div>
+            </div>
+
+            <div className="flex-1 flex items-center">
+              <p
+                className={`text-white text-sm md:text-lg font-medium leading-relaxed`}
+              >
+                {activity.desc}
+              </p>
+            </div>
+
+            <div className="flex items-center justify-between mt-3 text-white/80">
+              <div className="flex space-x-4 text-sm">
+                <span className="flex items-center">
+                  <Heart className="w-4 h-4 mx-1 stroke-white hover:stroke-red-400 hover:fill-pink-400 transition-all duration-300" />
+                  {activity.likes}
+                </span>
+              </div>
             </div>
           </div>
-
-          <div className="flex-1 flex items-center">
-            <p
-              className={`text-white text-sm md:text-lg font-medium leading-relaxed`}
-            >
-              {activity.desc}
-            </p>
-          </div>
-
-          <div className="flex items-center justify-between mt-3 text-white/80">
-            <div className="flex space-x-4 text-sm">
-              <span className="flex items-center">
-                <Heart className="w-4 h-4 mx-1 stroke-white hover:stroke-red-400 hover:fill-pink-400 transition-all duration-300" />
-                {activity.likes}
-              </span>
-            </div>
-          </div>
-        </div>
         </Link>
       );
     }

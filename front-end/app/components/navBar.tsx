@@ -50,10 +50,13 @@ export default function NavBar() {
           ))}
         </ul>
       </div>
-      <UserCircle
-        strokeWidth={1.1}
-        className="hidden w-10 h-10 mr-5 md:block"
-      />
+      <Link href={"/admin"}>
+        <UserCircle
+          onClick={()=>setSelected("admin")}
+          strokeWidth={1.1}
+          className="hidden w-10 h-10 mr-5 md:block"
+        />
+      </Link>
       <Menu
         className="mr-5 block md:hidden"
         onClick={() => setIsSideBarOpen(true)}

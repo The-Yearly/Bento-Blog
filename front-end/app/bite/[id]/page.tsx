@@ -3,13 +3,7 @@ import { useState, useEffect } from "react";
 import { useParams, useRouter } from "next/navigation";
 import { ActivityType } from "@/app/utils/types";
 import axios from "axios";
-import { 
-  ArrowLeft, 
-  Calendar, 
-  Heart, 
-  Tag, 
-  User, 
-} from "lucide-react";
+import { ArrowLeft, Calendar, Heart, Tag, User } from "lucide-react";
 import { motion } from "framer-motion";
 
 export default function IndividualBitePage() {
@@ -17,24 +11,23 @@ export default function IndividualBitePage() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const getBiteBg = (uid: number) => {
-  const colors = [
-    "bg-gradient-to-br from-purple-500 to-pink-500",
-    "bg-gradient-to-br from-blue-500 to-cyan-500",
-    "bg-gradient-to-br from-green-500 to-teal-500",
-    "bg-gradient-to-br from-orange-500 to-red-500",
-    "bg-gradient-to-br from-indigo-500 to-purple-500",
-    "bg-gradient-to-br from-yellow-500 to-orange-500",
-    "bg-gradient-to-br from-pink-500 to-rose-500",
-    "bg-gradient-to-br from-cyan-500 to-blue-500",
-  ];
-  console.log(uid%colors.length)
-  return colors[uid % colors.length];
-};
+    const colors = [
+      "bg-gradient-to-br from-purple-500 to-pink-500",
+      "bg-gradient-to-br from-blue-500 to-cyan-500",
+      "bg-gradient-to-br from-green-500 to-teal-500",
+      "bg-gradient-to-br from-orange-500 to-red-500",
+      "bg-gradient-to-br from-indigo-500 to-purple-500",
+      "bg-gradient-to-br from-yellow-500 to-orange-500",
+      "bg-gradient-to-br from-pink-500 to-rose-500",
+      "bg-gradient-to-br from-cyan-500 to-blue-500",
+    ];
+    console.log(uid % colors.length);
+    return colors[uid % colors.length];
+  };
 
-  
   const params = useParams();
   const router = useRouter();
-  
+
   const biteId = params?.id;
 
   useEffect(() => {
@@ -48,7 +41,7 @@ export default function IndividualBitePage() {
       try {
         setLoading(true);
         const response = await axios.get(
-          `${process.env.NEXT_PUBLIC_BACKEND_URL}/getPosts/Bite/${biteId}`
+          `${process.env.NEXT_PUBLIC_BACKEND_URL}/getPosts/Bite/${biteId}`,
         );
         setBite(response.data.data[0]);
         setError(null);
@@ -79,9 +72,6 @@ export default function IndividualBitePage() {
       return dateString;
     }
   };
-
-
-
 
   if (loading) {
     return (
@@ -127,9 +117,8 @@ export default function IndividualBitePage() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.1 }}
-          className={`${getBiteBg(bite.cont_id)} rounded-xl shadow-lg overflow-hidden`}
+          className={`${getBiteBg(bite.cont_id || 0)} rounded-xl shadow-lg overflow-hidden`}
         >
-
           <div className="p-6 md:p-8">
             <div className="flex justify-between items-start mb-6">
               <motion.h1
@@ -168,7 +157,6 @@ export default function IndividualBitePage() {
                   <span>{bite.likes} likes</span>
                 </div>
               )}
-
             </motion.div>
             {bite.desc && (
               <motion.div
@@ -177,8 +165,12 @@ export default function IndividualBitePage() {
                 transition={{ duration: 0.5, delay: 0.5 }}
                 className="mb-8"
               >
-                <h2 className="text-xl font-semibold text-white mb-4">Description</h2>
-                <p className="text-lg text-white leading-relaxed">{bite.desc}</p>
+                <h2 className="text-xl font-semibold text-white mb-4">
+                  Description
+                </h2>
+                <p className="text-lg text-white leading-relaxed">
+                  {bite.desc}
+                </p>
               </motion.div>
             )}
             <motion.div
@@ -229,7 +221,9 @@ export default function IndividualBitePage() {
                 transition={{ duration: 0.5, delay: 0.8 }}
                 className="border-t border-gray-200 pt-6"
               >
-                <h3 className="text-lg font-semibold text-gray-900 mb-4">About the Author</h3>
+                <h3 className="text-lg font-semibold text-gray-900 mb-4">
+                  About the Author
+                </h3>
                 <div className="flex items-center gap-4">
                   {bite.user.image && (
                     <img
@@ -247,7 +241,6 @@ export default function IndividualBitePage() {
                 </div>
               </motion.div>
             )}
-
           </div>
         </motion.div>
       </div>

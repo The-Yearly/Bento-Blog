@@ -34,9 +34,9 @@ export default function RecentActivity() {
           Recent Activity
         </p>
         {!isMobile ? (
-          <BentoBox contents={recentActivityData} />
+          <BentoBox contents={recentActivityData.slice(0, 10)} />
         ) : (
-          <BentoImageGrid contents={recentActivityData} />
+          <BentoImageGrid contents={recentActivityData.slice(0, 10)} />
         )}
       </div>
     );

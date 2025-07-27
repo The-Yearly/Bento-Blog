@@ -1,13 +1,13 @@
 export interface ActivityType {
-  image: string;
+  image?: string;
   desc: string;
-  uid: number;
+  uid?: number;
   content: string;
   title: string;
-  time: string;
-  cont_id: number;
+  time?: string;
+  cont_id?: number;
   likes: number;
-  fav: string;
+  fav: boolean;
   tags: string[];
   user?: {
     name: string;

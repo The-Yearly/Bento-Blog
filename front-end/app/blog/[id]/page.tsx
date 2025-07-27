@@ -12,7 +12,7 @@ export default function IndividualBlogPage() {
   const [error, setError] = useState<string | null>(null);
   const params = useParams();
   const router = useRouter();
-  
+
   const blogId = params?.id;
 
   useEffect(() => {
@@ -26,10 +26,10 @@ export default function IndividualBlogPage() {
       try {
         setLoading(true);
         const res = await axios.get(
-          `${process.env.NEXT_PUBLIC_BACKEND_URL}/getPosts/Blog/${blogId}`
+          `${process.env.NEXT_PUBLIC_BACKEND_URL}/getPosts/Blog/${blogId}`,
         );
         setBlog(res.data.data[0]);
-        console.log(res.data.data[0])
+        console.log(res.data.data[0]);
         setError(null);
       } catch (err) {
         console.error("Error fetching blog post:", err);
@@ -70,7 +70,9 @@ export default function IndividualBlogPage() {
   if (error || !blog) {
     return (
       <div className="flex flex-col items-center justify-center min-h-screen space-y-4">
-        <div className="text-red-500 text-lg">{error || "Blog post not found"}</div>
+        <div className="text-red-500 text-lg">
+          {error || "Blog post not found"}
+        </div>
         <button
           onClick={handleGoBack}
           className="flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
@@ -106,13 +108,13 @@ export default function IndividualBlogPage() {
           className="bg-white rounded-xl shadow-lg overflow-hidden"
         >
           {/* {blog.image && ( */}
-            <div className="w-full h-64 md:h-80 lg:h-96 overflow-hidden">
-              <img
-                src={`https://picsum.photos/800/500?random=${blog.cont_id}`}
-                alt={blog.title}
-                className="w-full h-full object-cover"
-              />
-            </div>
+          <div className="w-full h-64 md:h-80 lg:h-96 overflow-hidden">
+            <img
+              src={`https://picsum.photos/800/500?random=${blog.cont_id}`}
+              alt={blog.title}
+              className="w-full h-full object-cover"
+            />
+          </div>
           {/* )} */}
 
           <div className="p-6 md:p-8 lg:p-12">
@@ -152,7 +154,6 @@ export default function IndividualBlogPage() {
               )}
             </motion.div>
 
-
             {blog.tags && blog.tags.length > 0 && (
               <motion.div
                 initial={{ opacity: 0 }}
@@ -162,10 +163,12 @@ export default function IndividualBlogPage() {
               >
                 <div className="flex items-center gap-2 mb-3">
                   <Tag className="w-4 h-4 text-gray-600" />
-                  <span className="text-sm font-medium text-gray-600">Tags</span>
+                  <span className="text-sm font-medium text-gray-600">
+                    Tags
+                  </span>
                 </div>
                 <div className="flex flex-wrap gap-2">
-                  {blog.tags.map((tag,i) => (
+                  {blog.tags.map((tag, i) => (
                     <motion.span
                       key={tag}
                       initial={{ opacity: 0, scale: 0.8 }}

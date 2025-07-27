@@ -3,6 +3,7 @@ package controllers_v1
 import (
 	"backend/db"
 	"backend/models"
+	"fmt"
 	"net/http"
 	"strconv"
 	"time"
@@ -67,7 +68,7 @@ func GetPosts(ctx *gin.Context) {
 
 func GetRecents(ctx *gin.Context) {
 	var posts []models.Posts
-	res := db.DB.Model(&posts).Preload("User").Order("time DESC").Limit(10).Find(&posts)
+	res := db.DB.Model(&posts).Preload("User").Order("time DESC").Find(&posts)
 	if res.Error == nil {
 		var post []returnPost
 		for _, g := range posts {
@@ -177,4 +178,15 @@ func GetIndivitual(ctx *gin.Context) {
 			"message": "Server Error",
 		})
 	}
+}
+
+func Post(ctx *gin.Context) {
+	var newPost models.Posts
+	err := ctx.BindJSON(&newPost)
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+	fmt.Println(newPost)
+	db.DB.Create(&newPost)
 }

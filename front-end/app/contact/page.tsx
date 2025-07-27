@@ -44,7 +44,7 @@ export default function ContactMe() {
     {
       label: "LinkedIn",
       value: "john-yohan",
-      href: "www.linkedin.com/in/john-yohan",
+      href: "https://www.linkedin.com/in/john-yohan",
       type: "social",
     },
     {
@@ -159,7 +159,7 @@ export default function ContactMe() {
               </div>
             ))}
           </div>
-       </div>
+        </div>
       </div>
     </div>
   );
