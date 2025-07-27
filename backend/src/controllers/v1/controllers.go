@@ -9,6 +9,7 @@ import (
 	"time"
 
 	"github.com/gin-gonic/gin"
+	"github.com/golang-jwt/jwt/v5"
 )
 
 type returnPost struct {
@@ -27,7 +28,27 @@ type returnPost struct {
 		Image string `json:"image"`
 	}
 }
+type Creds struct {
+	Email    string `json:"email"`
+	Password string `json:"password"`
+}
 
+var secretKey = []byte("secret-key")
+
+func createToken(username string) (string, error) {
+	token := jwt.NewWithClaims(jwt.SigningMethodHS256,
+		jwt.MapClaims{
+			"username": username,
+			"exp":      time.Now().Add(time.Hour * 24).Unix(),
+		})
+
+	tokenString, err := token.SignedString(secretKey)
+	if err != nil {
+		return "", err
+	}
+
+	return tokenString, nil
+}
 func GetPosts(ctx *gin.Context) {
 	content := ctx.Param("type")
 	var posts []models.Posts
@@ -141,7 +162,7 @@ func GetIndivitual(ctx *gin.Context) {
 	idStr := ctx.Param("id")
 	id, err := strconv.Atoi(idStr)
 	if err != nil {
-		ctx.JSON(http.StatusBadRequest, gin.H{"error": "Invalid ID"})
+		ctx.JSON(500, gin.H{"error": "Invalid ID"})
 		return
 	}
 	var posts []models.Posts
@@ -193,15 +214,15 @@ func Update(ctx *gin.Context) {
 	var updatePost models.Posts
 	var currentPost models.Posts
 	if err := ctx.BindJSON(&updatePost); err != nil {
-		ctx.JSON(http.StatusBadRequest, gin.H{"message": "Invalid JSON"})
+		ctx.JSON(403, gin.H{"message": "Invalid JSON"})
 		return
 	}
 	if err := db.DB.First(&currentPost, updatePost.ID).Error; err != nil {
-		ctx.JSON(http.StatusNotFound, gin.H{"message": "Post not found"})
+		ctx.JSON(404, gin.H{"message": "Post not found"})
 		return
 	}
 	if err := db.DB.Model(&currentPost).Updates(updatePost).Error; err != nil {
-		ctx.JSON(500, gin.H{"message": "Failed to update post"})
+		ctx.JSON(403, gin.H{"message": "Failed to update post"})
 		return
 	}
 
@@ -215,5 +236,30 @@ func Delete(ctx *gin.Context) {
 		ctx.JSON(500, gin.H{"message": "Failed to update post"})
 		return
 	}
-	ctx.JSON(http.StatusOK, gin.H{"message": "Post Deleted"})
+	ctx.JSON(200, gin.H{"message": "Post Deleted"})
+}
+
+func SignIn(ctx *gin.Context) {
+	var User models.User
+	var Creds Creds
+	err := ctx.ShouldBindJSON(&Creds)
+	if err != nil {
+		ctx.JSON(403, gin.H{"message": "Server Error"})
+		return
+	}
+	fmt.Println(Creds)
+	res := db.DB.Where("email = ?", Creds.Email).First(&User)
+	if res.Error != nil {
+		ctx.JSON(404, gin.H{"message": "User Not Found"})
+	}
+	if User.Password == Creds.Password {
+		token, _ := createToken(User.Email)
+		User.Session = &token
+		ctx.JSON(200, gin.H{"message": "Succesfull Login", "token": &token})
+		return
+
+	} else {
+		ctx.JSON(403, gin.H{"message": "Invalid Password"})
+		return
+	}
 }

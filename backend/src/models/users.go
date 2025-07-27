@@ -6,5 +6,6 @@ type User struct {
 	Image    string  `json:"image"`
 	Email    string  `json:"email"`
 	Password string  `json:"password"`
+	Session  *string `json:"session"`
 	Posts    []Posts `gorm:"foreignKey:Uid" json:"contents"`
 }

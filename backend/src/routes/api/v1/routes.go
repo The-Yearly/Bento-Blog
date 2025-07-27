@@ -15,4 +15,5 @@ func RegisterRoutes(r *gin.Engine) {
 	router.POST("/post", controllers_v1.Post)
 	router.POST("/update", controllers_v1.Update)
 	router.GET("/delete/:id", controllers_v1.Delete)
+	router.POST("/signIn", controllers_v1.SignIn)
 }
