@@ -17,7 +17,6 @@ export default function EditBitePage() {
     fav: false,
     likes: 0,
     image: "",
-    time: "",
     uid: 0,
     cont_id: 0,
     content: "Bite",
@@ -38,21 +37,10 @@ export default function EditBitePage() {
     loadData();
   }, [params.id]);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit =async(e: React.FormEvent) => {
     e.preventDefault();
-
-    const updatedBite = {
-      cont_id: formData.cont_id,
-      title: "",
-      desc: formData.desc,
-      content: "Bite",
-      likes: 0,
-      fav: false,
-      tags: formData.tags.map((tag) => tag.trim()).filter((tag) => tag),
-      uid: formData.uid,
-    };
-
-    console.log("Bite updated:", updatedBite);
+    console.log("Bite updated:", formData);
+    const res=await axios.post(process.env.NEXT_PUBLIC_BACKEND_URL+"/update",formData)
     alert("Bite updated successfully!");
     router.push("/admin");
   };

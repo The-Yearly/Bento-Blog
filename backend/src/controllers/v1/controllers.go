@@ -184,9 +184,36 @@ func Post(ctx *gin.Context) {
 	var newPost models.Posts
 	err := ctx.BindJSON(&newPost)
 	if err != nil {
-		fmt.Println(err)
 		return
 	}
 	fmt.Println(newPost)
 	db.DB.Create(&newPost)
+}
+func Update(ctx *gin.Context) {
+	var updatePost models.Posts
+	var currentPost models.Posts
+	if err := ctx.BindJSON(&updatePost); err != nil {
+		ctx.JSON(http.StatusBadRequest, gin.H{"message": "Invalid JSON"})
+		return
+	}
+	if err := db.DB.First(&currentPost, updatePost.ID).Error; err != nil {
+		ctx.JSON(http.StatusNotFound, gin.H{"message": "Post not found"})
+		return
+	}
+	if err := db.DB.Model(&currentPost).Updates(updatePost).Error; err != nil {
+		ctx.JSON(500, gin.H{"message": "Failed to update post"})
+		return
+	}
+
+	ctx.JSON(http.StatusOK, gin.H{"message": "Post updated successfully"})
+}
+
+func Delete(ctx *gin.Context) {
+	id := ctx.Param("id")
+	err := db.DB.Where("id=?", id).Delete(&models.Posts{}).Error
+	if err != nil {
+		ctx.JSON(500, gin.H{"message": "Failed to update post"})
+		return
+	}
+	ctx.JSON(http.StatusOK, gin.H{"message": "Post Deleted"})
 }

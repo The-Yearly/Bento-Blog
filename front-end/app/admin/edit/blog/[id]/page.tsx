@@ -33,23 +33,10 @@ export default function EditBlogPage() {
     loadBlogData();
   }, [params.id]);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async(e: React.FormEvent) => {
     e.preventDefault();
-
-    const updatedBlog = {
-      cont_id: formData.cont_id,
-      title: formData.title,
-      desc: formData.desc,
-      content: "Blog",
-      time: formData.time,
-      likes: formData.likes,
-      fav: formData.fav,
-      tags: formData.tags.map((tag) => tag.trim()).filter((tag) => tag),
-      image: formData.image || undefined,
-      uid: formData.uid,
-    };
-
-    console.log("Blog updated:", updatedBlog);
+    const res=await axios.post(process.env.NEXT_PUBLIC_BACKEND_URL+"/update",formData)
+    console.log("Blog updated:", formData);
     alert("Blog post updated successfully!");
     router.push("/admin");
   };

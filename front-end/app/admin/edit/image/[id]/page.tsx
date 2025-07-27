@@ -37,23 +37,11 @@ export default function EditImagePage() {
     loadImageData();
   }, [params.id]);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async(e: React.FormEvent) => {
     e.preventDefault();
+    const res=await axios.post(process.env.NEXT_PUBLIC_BACKEND_URL+"/update",formData)
 
-    const updatedImage = {
-      cont_id: formData.cont_id,
-      title: formData.title,
-      desc: "",
-      content: "Image",
-      time: new Date().toISOString(),
-      likes: formData.likes,
-      fav: false,
-      tags: formData.tags.map((tag) => tag.trim()).filter((tag) => tag),
-      image: formData.image,
-      uid: formData.uid,
-    };
-
-    console.log("Image updated:", updatedImage);
+    console.log("Image updated:", formData);
     alert("Image post updated successfully!");
     router.push("/admin");
   };

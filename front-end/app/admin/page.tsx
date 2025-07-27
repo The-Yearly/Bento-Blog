@@ -10,7 +10,11 @@ export default function AdminPage() {
   const [filter, setFilter] = useState<string>("all");
   const [searchQuery, setSearchQuery] = useState<string>("");
   const [wait, setWait] = useState(true);
-  const [model,setModel]=useState(true)
+  const [model,setModel]=useState(false)
+  const [deleteContId,setDeleteContId]=useState(0)
+  useEffect(()=>{
+  console.log(model)
+},[model])
   useEffect(() => {
     const fetchData = async () => {
       setWait(true);
@@ -23,10 +27,11 @@ export default function AdminPage() {
     fetchData();
   }, []);
 
-  const deleteActivity = (cont_id: number) => {
-    if (confirm("Are you sure you want to delete this item?")) {
+  const deleteActivity =async() => {
+    if(deleteContId!=0){
+      const res=axios.get(process.env.NEXT_PUBLIC_BACKEND_URL+"/delete/"+deleteContId)
       setActivities(
-        activities.filter((activity) => activity.cont_id !== cont_id),
+        activities.filter((activity) => activity.cont_id !== deleteContId),
       );
     }
   };
@@ -125,7 +130,7 @@ export default function AdminPage() {
                 className="border border-gray-200 rounded-lg p-5 bg-white shadow-sm"
               >
                 <div className="flex justify-between items-start mb-4">
-                  <div className="flex-1">
+                  <div  className="flex-1">
                     <div className="flex items-center gap-2.5 mb-2">
                       <span
                         className={`px-2 py-1 rounded-xl text-xs font-medium ${
@@ -142,14 +147,12 @@ export default function AdminPage() {
                         <span className="text-amber-500">⭐</span>
                       )}
                     </div>
-                    <h3 className="m-0 mb-2 text-neutral-600 text-xl font-semibold">
+                    <h3  className="m-0 mb-2 text-neutral-600 text-xl font-semibold">
                       {activity.title}
                     </h3>
                     {activity.desc && (
-                      <p className="m-0 mb-2.5 text-gray-600 leading-relaxed">
-                        {activity.desc.length > 150
-                          ? `${activity.desc.substring(0, 150)}...`
-                          : activity.desc}
+                      <p dangerouslySetInnerHTML={{ __html: activity.desc }} className="m-0 mb-2.5 text-gray-600 leading-relaxed">
+
                       </p>
                     )}
                     <div className="flex flex-wrap gap-1 mb-2.5">
@@ -188,8 +191,9 @@ export default function AdminPage() {
                   </Link>
                   <button
                     onClick={() =>{
-                      // activity.cont_id && deleteActivity(activity.cont_id)
                       setModel(true)
+                      activity.cont_id&&setDeleteContId(activity.cont_id)
+                      console.log("Hi")
                     }}
                     className="px-3 py-1.5 bg-red-100 text-red-600 border-none rounded text-sm cursor-pointer hover:bg-red-200"
                   >
@@ -206,18 +210,36 @@ export default function AdminPage() {
               {searchQuery && ` matching "${searchQuery}"`}.
             </div>
           )}
+          {model &&
+  <div className="bg-black/60 fixed top-0 left-0 min-h-screen w-full z-50 flex items-center justify-center">
+    <div className="h-[24vh] w-[48vh] bg-white rounded-lg shadow-lg p-5">
+      <h2 className="text-lg text-neutral-600 font-semibold mb-4">Are you sure you want to delete this item?</h2>
+      <div className="flex justify-end gap-3">
+        <button
+          className="px-4 py-2 bg-gray-200 text-gray-800 rounded hover:bg-gray-300"
+          onClick={() => setModel(false)}
+        >
+          Cancel
+        </button>
+        <button
+          className="px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600"
+          onClick={() => {
+            setModel(false);
+            deleteActivity()
+          }}
+        >
+          Delete
+        </button>
+      </div>
+    </div>
+  </div>
+}
         </div>
+        
       ) : (
         <div>Loading</div>
       )}
-      {model&&
-        <div className="bg-black/50 min-h-screen w-full flex items-center justify-center">
-          <div className="w-full h-full"/>
-          <div className="h-[32vh] w-[48vh] bg-white">
-
-          </div>
-        </div>
-      }
+    
     </>
   );
 }
