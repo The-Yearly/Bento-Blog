@@ -202,31 +202,43 @@ func GetIndivitual(ctx *gin.Context) {
 }
 
 func Post(ctx *gin.Context) {
-	var newPost models.Posts
-	if err := ctx.ShouldBindJSON(&newPost); err != nil {
-		ctx.JSON(400, gin.H{"message": "Invalid request"})
-		ctx.Abort()
+	postVal, exist := ctx.Get("post")
+	if !exist {
+		ctx.JSON(400, gin.H{"message": "Post data missing"})
 		return
 	}
-	db.DB.Create(&newPost)
+	newPost, ok := postVal.(models.Posts)
+	if !ok {
+		ctx.JSON(500, gin.H{"message": "Invalid post data type"})
+		return
+	}
 
+	if err := db.DB.Create(&newPost).Error; err != nil {
+		ctx.JSON(500, gin.H{"message": "Failed to create post"})
+		return
+	}
+
+	ctx.JSON(201, gin.H{"message": "Post created successfully"})
 }
 func Update(ctx *gin.Context) {
-	var updatePost models.Posts
 	var currentPost models.Posts
-	if err := ctx.ShouldBindJSON(&updatePost); err != nil {
-		fmt.Println(err)
-		ctx.JSON(403, gin.H{"message": "Invalid JSON"})
+	postVal, exist := ctx.Get("post")
+	if !exist {
+		ctx.JSON(400, gin.H{"message": "Post data missing"})
 		return
 	}
-	fmt.Println("JSkjh")
+	updatePost, ok := postVal.(models.Posts)
+	if !ok {
+		ctx.JSON(500, gin.H{"message": "Invalid post data type"})
+		return
+	}
+
 	if err := db.DB.First(&currentPost, updatePost.ID).Error; err != nil {
 		ctx.JSON(404, gin.H{"message": "Post not found"})
 		return
 	}
 
 	if err := db.DB.Model(&currentPost).Updates(updatePost).Error; err != nil {
-		fmt.Println("Ji")
 		ctx.JSON(403, gin.H{"message": "Failed to update post"})
 		return
 	}
@@ -236,12 +248,29 @@ func Update(ctx *gin.Context) {
 
 func Delete(ctx *gin.Context) {
 	id := ctx.Param("id")
-	err := db.DB.Where("id=?", id).Delete(&models.Posts{}).Error
-	if err != nil {
-		ctx.JSON(500, gin.H{"message": "Failed to update post"})
-		return
+	var User models.User
+	type Creds struct {
+		Uid     int    `json:"uid"`
+		Session string `json:"session"`
 	}
-	ctx.JSON(200, gin.H{"message": "Post Deleted"})
+	var creds Creds
+	if Binderr := ctx.BindJSON(&creds); Binderr != nil {
+		ctx.JSON(403, gin.H{"message": "InValid Data"})
+	}
+	fmt.Println(creds, &creds)
+	if usererr := db.DB.Where("id=?", creds.Uid).First(&User).Error; usererr != nil {
+		ctx.JSON(403, gin.H{"message": "Invalid"})
+	}
+	if *User.Session == creds.Session {
+		err := db.DB.Where("id=?", id).Delete(&models.Posts{}).Error
+		if err != nil {
+			ctx.JSON(500, gin.H{"message": "Failed to update post"})
+			return
+		}
+		ctx.JSON(200, gin.H{"message": "Post Deleted"})
+	} else {
+		ctx.JSON(403, gin.H{"message": "Invalid Session"})
+	}
 }
 
 func SignIn(ctx *gin.Context) {

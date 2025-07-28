@@ -4,12 +4,14 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 import { ActivityType } from "../utils/types";
 import axios from "axios";
-
+import Cookies from "js-cookie";
 export default function AdminPage() {
   const [activities, setActivities] = useState<ActivityType[]>([]);
   const [filter, setFilter] = useState<string>("all");
   const [searchQuery, setSearchQuery] = useState<string>("");
   const [wait, setWait] = useState(true);
+  const credsString = Cookies.get("creds");
+  const creds = JSON.parse(credsString || "{}");
   const [model, setModel] = useState(false);
   const [deleteContId, setDeleteContId] = useState(0);
   useEffect(() => {
@@ -26,11 +28,12 @@ export default function AdminPage() {
     };
     fetchData();
   }, []);
-
+  console.log(creds);
   const deleteActivity = async () => {
     if (deleteContId != 0) {
-      const res = axios.get(
+      const res = axios.post(
         process.env.NEXT_PUBLIC_BACKEND_URL + "/delete/" + deleteContId,
+        creds,
       );
       setActivities(
         activities.filter((activity) => activity.cont_id !== deleteContId),
