@@ -6,6 +6,7 @@ import Link from "next/link";
 import { ActivityType } from "@/app/utils/types";
 import axios from "axios";
 import Cookies from "js-cookie";
+import { toast,ToastContainer } from "react-toastify";
 export default function AddBlogPage() {
   const router = useRouter();
   const credsString = Cookies.get("creds");
@@ -23,17 +24,31 @@ export default function AddBlogPage() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    const res = await axios.post(
-      process.env.NEXT_PUBLIC_BACKEND_URL + "/post/" + creds.session,
-      formData,
-    );
-    
-    alert("Blog post created successfully!");
-    router.push("/admin");
+try {
+  const res = await axios.post(
+    process.env.NEXT_PUBLIC_BACKEND_URL + "/post/" + creds.session,
+    formData
+  );
+  toast.success("Post created successfully!");
+  console.log(res.data);
+} catch (error) {
+  if (axios.isAxiosError(error)) {
+    if (error.response) {
+      toast.error(`Error ${error.response.status}: ${error.response.data.message || "Something went wrong"}`);
+    } else if (error.request) {
+      toast.error("No response from server. Please try again.");
+    } else {
+      toast.error("Request error: " + error.message);
+    }
+  } else {
+    toast.error("Unexpected error occurred.");
+  }
+}
   };
 
   return (
     <div className="p-5 max-w-4xl mx-auto">
+      <ToastContainer/>
       <div className="mb-8">
         <Link href="/admin" className="text-blue-600 no-underline">
           ← Back to Admin

@@ -4,7 +4,7 @@ import { Star } from "lucide-react";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { BentoBox } from "./BentoGrid";
-import BentoImageGrid, { MobileBentoBox } from "./BenotImageGrid";
+import  { MobileBentoBox } from "./BenotImageGrid";
 export default function Hero() {
   const [featured, setFeatured] = useState<ActivityType[]>([]);
   const [wait, setWait] = useState(true);

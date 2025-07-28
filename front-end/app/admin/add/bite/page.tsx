@@ -44,7 +44,7 @@ export default function AddBitePage() {
       <form onSubmit={handleSubmit} className="grid gap-5">
         <div>
           <label className="block mb-1 font-medium">
-            What's on your mind? *
+            What&apos;s on your mind? *
           </label>
           <textarea
             value={formData.desc}
