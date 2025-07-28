@@ -20,7 +20,7 @@ const BentoImageCard = ({ activity }: { activity: ActivityType }) => {
           {activity.content != "Bite" ? (
             <div className="relative w-full h-full overflow-hidden rounded-lg group cursor-pointer shadow-lg hover:shadow-xl transition-all duration-300">
               <Image
-                src={`https://picsum.photos/800/500?random=${activity.cont_id}`}
+                src={activity.image || "/placeholder.svg"}
                 alt={activity.title}
                 className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500 ease-out"
                 width={800}
@@ -155,51 +155,53 @@ export default function BentoImageGrid({
   );
 }
 export const MobileBentoBox = ({ contents }: { contents: ActivityType[] }) => {
-  return (
-    <>
-      <div className="min-h-screen w-full flex justify-center p-4">
-        <div className="grid grid-cols-2 gap-2 w-full max-w-md overflow-hidden items-stretch">
-          {contents.map((capture, i) => {
-            const capI = (i + 1) % 4;
-            const elements = [];
+  if (contents) {
+    return (
+      <>
+        <div className="min-h-screen w-full flex justify-center p-4">
+          <div className="grid grid-cols-2 gap-2 w-full max-w-md overflow-hidden items-stretch">
+            {contents.map((capture, i) => {
+              const capI = (i + 1) % 4;
+              const elements = [];
 
-            if (capI === 1) {
-              elements.push(
-                <div key={i} className="flex flex-col w-full h-full gap-y-2">
-                  {[i, i + 1].map((j) => {
-                    const item = contents[j];
-                    if (!item) return null;
+              if (capI === 1) {
+                elements.push(
+                  <div key={i} className="flex flex-col w-full h-full gap-y-2">
+                    {[i, i + 1].map((j) => {
+                      const item = contents[j];
+                      if (!item) return null;
 
-                    return (
-                      <div key={j} className="aspect-square flex-1">
-                        <BentoImageCard activity={item} />
-                      </div>
-                    );
-                  })}
-                </div>,
-              );
-            }
+                      return (
+                        <div key={j} className="aspect-square flex-1">
+                          <BentoImageCard activity={item} />
+                        </div>
+                      );
+                    })}
+                  </div>,
+                );
+              }
 
-            if (capI === 3) {
-              elements.push(
-                <div key={i} className="w-full z-10 aspect-[60/117]">
-                  <BentoImageCard activity={capture} />
-                </div>,
-              );
-            }
+              if (capI === 3) {
+                elements.push(
+                  <div key={i} className="w-full z-10 aspect-[60/117]">
+                    <BentoImageCard activity={capture} />
+                  </div>,
+                );
+              }
 
-            if (capI === 0) {
-              elements.push(
-                <div key={i} className="col-span-2 aspect-[2/1] max-w-md">
-                  <BentoImageCard activity={capture} />
-                </div>,
-              );
-            }
+              if (capI === 0) {
+                elements.push(
+                  <div key={i} className="col-span-2 aspect-[2/1] max-w-md">
+                    <BentoImageCard activity={capture} />
+                  </div>,
+                );
+              }
 
-            return elements;
-          })}
+              return elements;
+            })}
+          </div>
         </div>
-      </div>
-    </>
-  );
+      </>
+    );
+  }
 };

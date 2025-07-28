@@ -1,44 +1,51 @@
-"use client"
-import { useState } from "react"
-import { useRouter } from "next/navigation"
-import Link from "next/link"
-import axios from "axios"
-
+"use client";
+import { useState } from "react";
+import { useRouter } from "next/navigation";
+import Link from "next/link";
+import axios from "axios";
+import { toast, ToastContainer } from "react-toastify";
+import Cookies from "js-cookie";
 export default function AdminSignInPage() {
-  const router = useRouter()
+  const router = useRouter();
   const [formData, setFormData] = useState({
     email: "",
     password: "",
-  })
-  const [isLoading, setIsLoading] = useState(false)
-  const [error, setError] = useState("")
-  const [showPassword, setShowPassword] = useState(false)
+  });
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
-    setIsLoading(true)
-    let res
-  try {
-  const res = await axios.post(
-    process.env.NEXT_PUBLIC_BACKEND_URL + "/signIn",
-    formData
-  );
-  console.log("Login successful:", res.data);
-} catch (error) {
-  if (axios.isAxiosError(error)) {
-    console.error("Axios error:", error.response?.data || error.message);
-  } else {
-    console.error("Unexpected error:", error);
-  }
-}finally{
-    setIsLoading(false)
-}
+    e.preventDefault();
+    setIsLoading(true);
+    let res;
+    try {
+      const res = await axios.post(
+        process.env.NEXT_PUBLIC_BACKEND_URL + "/signIn",
+        formData,
+      );
+      toast.success("Login successful:", res.data);
+      Cookies.set(
+        "creds",
+        JSON.stringify({ uid: res.data.uid, session: res.data.token }),
+      );
+      router.push("/admin");
+    } catch (err) {
+      if (axios.isAxiosError(err)) {
+        toast.warn("Axios error:", err.response?.data || err.message);
+      } else {
+        console.log("Unexpected error:", err);
+      }
+    } finally {
+      setIsLoading(false);
+    }
 
-    setError("")
-  }
+    setError("");
+  };
 
   return (
-    <div className="min-h-screen flex flex-col justify-center py-12 sm:px-6 lg:px-8">
+    <div className="min-h-screen flex flex-col justify-center sm:px-6">
+      <ToastContainer />
       <div className="sm:mx-auto sm:w-full sm:max-w-md">
         <div className="text-center">
           <h2 className="text-xl text-gray-300">Sign in to your account</h2>
@@ -49,11 +56,16 @@ export default function AdminSignInPage() {
         <div className="bg-white py-8 px-4 shadow-lg sm:rounded-lg sm:px-10">
           <form className="space-y-6" onSubmit={handleSubmit}>
             {error && (
-              <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-md text-sm">{error}</div>
+              <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-md text-sm">
+                {error}
+              </div>
             )}
 
             <div>
-              <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">
+              <label
+                htmlFor="email"
+                className="block text-sm font-medium text-gray-700 mb-1"
+              >
                 Email address
               </label>
               <input
@@ -63,14 +75,19 @@ export default function AdminSignInPage() {
                 autoComplete="email"
                 required
                 value={formData.email}
-                onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                onChange={(e) =>
+                  setFormData({ ...formData, email: e.target.value })
+                }
                 className="w-full px-3 py-2 border border-gray-300 text-neutral-600 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                 placeholder="Enter your email"
               />
             </div>
 
             <div>
-              <label htmlFor="password" className="block text-sm font-medium text-gray-700 mb-1">
+              <label
+                htmlFor="password"
+                className="block text-sm font-medium text-gray-700 mb-1"
+              >
                 Password
               </label>
               <div className="relative">
@@ -81,7 +98,9 @@ export default function AdminSignInPage() {
                   autoComplete="current-password"
                   required
                   value={formData.password}
-                  onChange={(e) => setFormData({ ...formData, password: e.target.value })}
+                  onChange={(e) =>
+                    setFormData({ ...formData, password: e.target.value })
+                  }
                   className="w-full px-3 py-2 border text-neutral-600 border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 pr-10"
                   placeholder="Enter your password"
                 />
@@ -91,7 +110,12 @@ export default function AdminSignInPage() {
                   onClick={() => setShowPassword(!showPassword)}
                 >
                   {showPassword ? (
-                    <svg className="h-5 w-5 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <svg
+                      className="h-5 w-5 text-gray-400"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                    >
                       <path
                         strokeLinecap="round"
                         strokeLinejoin="round"
@@ -100,7 +124,12 @@ export default function AdminSignInPage() {
                       />
                     </svg>
                   ) : (
-                    <svg className="h-5 w-5 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <svg
+                      className="h-5 w-5 text-gray-400"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                    >
                       <path
                         strokeLinecap="round"
                         strokeLinejoin="round"
@@ -118,7 +147,6 @@ export default function AdminSignInPage() {
                 </button>
               </div>
             </div>
-
 
             <div>
               <button
@@ -156,7 +184,6 @@ export default function AdminSignInPage() {
               </button>
             </div>
           </form>
-
         </div>
         <div className="mt-6 text-center">
           <Link href="/" className="text-sm text-gray-600 hover:text-gray-900">
@@ -165,5 +192,5 @@ export default function AdminSignInPage() {
         </div>
       </div>
     </div>
-  )
+  );
 }

@@ -30,8 +30,7 @@ export default function DeveloperActivityFeed() {
       const res = await axios.get(
         process.env.NEXT_PUBLIC_BACKEND_URL + "/getPosts/Bite",
       );
-      setBites(res.data.data);
-      console.log(res);
+      setBites(res.data.data || []);
       setWait(false);
     };
     fetchData();

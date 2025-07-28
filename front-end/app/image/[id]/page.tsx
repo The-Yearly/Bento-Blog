@@ -125,7 +125,7 @@ export default function IndividualImagePage() {
             <div className="bg-white rounded-xl shadow-lg overflow-hidden">
               <div className="relative bg-black/50 backdrop-blur-2xl">
                 <motion.img
-                  src={`https://picsum.photos/800/500?random=${image.cont_id}`}
+                  src={image.image || "/placeholder.svg"}
                   alt={image.title}
                   className={`w-full transition-transform duration-300 cursor-pointer ${
                     isZoomed ? "scale-150 origin-center" : "scale-100"
@@ -268,7 +268,7 @@ export default function IndividualImagePage() {
                   <div className="flex items-center gap-4">
                     {image.user.image && (
                       <img
-                        src={image.user.image}
+                        src={image.user.image || "/placeholder.svg"}
                         alt={image.user.name}
                         className="w-12 h-12 rounded-full object-cover"
                       />
@@ -316,7 +316,7 @@ export default function IndividualImagePage() {
             onClick={toggleZoom}
           >
             <motion.img
-              src={`https://picsum.photos/800/500?random=${image.cont_id}`}
+              src={image.image || "/placeholder.svg"}
               alt={image.title}
               className="max-w-full max-h-full object-contain cursor-pointer"
               initial={{ scale: 0.8 }}

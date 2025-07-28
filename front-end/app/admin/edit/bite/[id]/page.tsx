@@ -6,10 +6,13 @@ import { useState, useEffect } from "react";
 import { useParams, useRouter } from "next/navigation";
 import Link from "next/link";
 import axios from "axios";
+import Cookies from "js-cookie";
 import { ActivityType } from "@/app/utils/types";
 export default function EditBitePage() {
   const router = useRouter();
   const params = useParams();
+  const credsString = Cookies.get("creds");
+  const creds = JSON.parse(credsString || "{}");
   const id = params.id;
   const [formData, setFormData] = useState<ActivityType>({
     title: "",
@@ -17,7 +20,7 @@ export default function EditBitePage() {
     fav: false,
     likes: 0,
     image: "",
-    uid: 0,
+    uid: creds.uid,
     cont_id: 0,
     content: "Bite",
     tags: [],
@@ -37,10 +40,13 @@ export default function EditBitePage() {
     loadData();
   }, [params.id]);
 
-  const handleSubmit =async(e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     console.log("Bite updated:", formData);
-    const res=await axios.post(process.env.NEXT_PUBLIC_BACKEND_URL+"/update",formData)
+    const res = await axios.post(
+      process.env.NEXT_PUBLIC_BACKEND_URL + "/update/" + creds.session,
+      formData,
+    );
     alert("Bite updated successfully!");
     router.push("/admin");
   };

@@ -3,10 +3,13 @@ import { useState, useEffect } from "react";
 import { useParams, useRouter } from "next/navigation";
 import Link from "next/link";
 import axios from "axios";
+import Cookies from "js-cookie";
 import { ActivityType } from "@/app/utils/types";
 export default function EditBlogPage() {
   const router = useRouter();
   const params = useParams();
+  const credsString = Cookies.get("creds");
+  const creds = JSON.parse(credsString || "{}");
   const [formData, setFormData] = useState<ActivityType>({
     title: "",
     desc: "",
@@ -14,13 +17,12 @@ export default function EditBlogPage() {
     likes: 0,
     image: "",
     time: "",
-    uid: 0,
+    uid: creds.session,
     cont_id: 0,
     content: "Bite",
     tags: [],
   });
   const [loading, setLoading] = useState(true);
-
   useEffect(() => {
     const loadBlogData = async () => {
       const res = await axios.get(
@@ -33,9 +35,12 @@ export default function EditBlogPage() {
     loadBlogData();
   }, [params.id]);
 
-  const handleSubmit = async(e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    const res=await axios.post(process.env.NEXT_PUBLIC_BACKEND_URL+"/update",formData)
+    const res = await axios.post(
+      process.env.NEXT_PUBLIC_BACKEND_URL + "/update/" + creds.session,
+      formData,
+    );
     console.log("Blog updated:", formData);
     alert("Blog post updated successfully!");
     router.push("/admin");

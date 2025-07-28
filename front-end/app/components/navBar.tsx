@@ -52,7 +52,7 @@ export default function NavBar() {
       </div>
       <Link href={"/admin"}>
         <UserCircle
-          onClick={()=>setSelected("admin")}
+          onClick={() => setSelected("admin")}
           strokeWidth={1.1}
           className="hidden w-10 h-10 mr-5 md:block"
         />

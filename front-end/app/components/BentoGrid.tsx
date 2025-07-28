@@ -37,7 +37,7 @@ export const BentoCard = ({ activity }: { activity: ActivityType }) => {
         >
           <div className="w-full h-full">
             <Image
-              src={`https://picsum.photos/800/500?random=${activity.cont_id}`}
+              src={activity.image || "/placeholder.svg"}
               alt={"Activity Image"}
               className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
               width={800}

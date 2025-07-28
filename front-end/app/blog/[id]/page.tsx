@@ -29,7 +29,6 @@ export default function IndividualBlogPage() {
           `${process.env.NEXT_PUBLIC_BACKEND_URL}/getPosts/Blog/${blogId}`,
         );
         setBlog(res.data.data[0]);
-        console.log(res.data.data[0]);
         setError(null);
       } catch (err) {
         console.error("Error fetching blog post:", err);
@@ -107,15 +106,13 @@ export default function IndividualBlogPage() {
           transition={{ duration: 0.5, delay: 0.1 }}
           className="bg-white rounded-xl shadow-lg overflow-hidden"
         >
-          {/* {blog.image && ( */}
           <div className="w-full h-64 md:h-80 lg:h-96 overflow-hidden">
             <img
-              src={`https://picsum.photos/800/500?random=${blog.cont_id}`}
+              src={blog.image || "/placeholder.svg"}
               alt={blog.title}
               className="w-full h-full object-cover"
             />
           </div>
-          {/* )} */}
 
           <div className="p-6 md:p-8 lg:p-12">
             <motion.h1
@@ -206,7 +203,7 @@ export default function IndividualBlogPage() {
                 <div className="flex items-center gap-4">
                   {blog.user.image && (
                     <img
-                      src={blog.user.image}
+                      src={blog.user.image || "/placeholder.svg"}
                       alt={blog.user.name}
                       className="w-12 h-12 rounded-full object-cover"
                     />

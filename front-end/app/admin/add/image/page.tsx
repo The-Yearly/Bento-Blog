@@ -6,27 +6,28 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import axios from "axios";
-
+import Cookies from "js-cookie";
 export default function AddImagePage() {
   const router = useRouter();
-  const session = localStorage.getItem("session");
-  const sessionJson: { id: string; session: string } = JSON.parse(
-    session || '{"id": "1", "session": ""}',
-  );
+  const credsString = Cookies.get("creds");
+  const creds = JSON.parse(credsString || "{}");
   const [formData, setFormData] = useState<ActivityType>({
     title: "",
     desc: "",
     fav: false,
     likes: 0,
     image: "",
-    uid: parseInt(sessionJson.id || "1"),
+    uid: parseInt(creds.uid || "1"),
     content: "Image",
     tags: [],
   });
 
-  const handleSubmit = async(e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    const res=await axios.post(process.env.NEXT_PUBLIC_BACKEND_URL+"/post",formData)
+    const res = await axios.post(
+      process.env.NEXT_PUBLIC_BACKEND_URL + "/post/" + creds.session,
+      formData,
+    );
     console.log("New image created:", formData);
     alert("Image post created successfully!");
     router.push("/admin");

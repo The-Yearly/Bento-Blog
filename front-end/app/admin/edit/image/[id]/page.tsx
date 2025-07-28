@@ -6,11 +6,13 @@ import { useState, useEffect } from "react";
 import { useParams, useRouter } from "next/navigation";
 import Link from "next/link";
 import axios from "axios";
-
+import Cookies from "js-cookie";
 export default function EditImagePage() {
   const router = useRouter();
   const params = useParams();
   const id = params.id;
+  const credsString = Cookies.get("creds");
+  const creds = JSON.parse(credsString || "{}");
   const [formData, setFormData] = useState<ActivityType>({
     title: "",
     desc: "",
@@ -18,7 +20,7 @@ export default function EditImagePage() {
     likes: 0,
     image: "",
     time: "",
-    uid: 0,
+    uid: creds.uid,
     cont_id: 0,
     content: "Bite",
     tags: [],
@@ -37,9 +39,12 @@ export default function EditImagePage() {
     loadImageData();
   }, [params.id]);
 
-  const handleSubmit = async(e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    const res=await axios.post(process.env.NEXT_PUBLIC_BACKEND_URL+"/update",formData)
+    const res = await axios.post(
+      process.env.NEXT_PUBLIC_BACKEND_URL + "/update/" + creds.session,
+      formData,
+    );
 
     console.log("Image updated:", formData);
     alert("Image post updated successfully!");

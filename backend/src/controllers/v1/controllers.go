@@ -203,25 +203,30 @@ func GetIndivitual(ctx *gin.Context) {
 
 func Post(ctx *gin.Context) {
 	var newPost models.Posts
-	err := ctx.BindJSON(&newPost)
-	if err != nil {
+	if err := ctx.ShouldBindJSON(&newPost); err != nil {
+		ctx.JSON(400, gin.H{"message": "Invalid request"})
+		ctx.Abort()
 		return
 	}
-	fmt.Println(newPost)
 	db.DB.Create(&newPost)
+
 }
 func Update(ctx *gin.Context) {
 	var updatePost models.Posts
 	var currentPost models.Posts
-	if err := ctx.BindJSON(&updatePost); err != nil {
+	if err := ctx.ShouldBindJSON(&updatePost); err != nil {
+		fmt.Println(err)
 		ctx.JSON(403, gin.H{"message": "Invalid JSON"})
 		return
 	}
+	fmt.Println("JSkjh")
 	if err := db.DB.First(&currentPost, updatePost.ID).Error; err != nil {
 		ctx.JSON(404, gin.H{"message": "Post not found"})
 		return
 	}
+
 	if err := db.DB.Model(&currentPost).Updates(updatePost).Error; err != nil {
+		fmt.Println("Ji")
 		ctx.JSON(403, gin.H{"message": "Failed to update post"})
 		return
 	}
@@ -255,7 +260,9 @@ func SignIn(ctx *gin.Context) {
 	if User.Password == Creds.Password {
 		token, _ := createToken(User.Email)
 		User.Session = &token
-		ctx.JSON(200, gin.H{"message": "Succesfull Login", "token": &token})
+		fmt.Println(User)
+		db.DB.Save(&User)
+		ctx.JSON(200, gin.H{"message": "Succesfull Login", "token": &token, "uid": User.ID})
 		return
 
 	} else {

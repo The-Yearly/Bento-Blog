@@ -37,9 +37,9 @@ export default function Hero() {
             <Star className="fill-yellow-400 hover:scale-125 transition-transform duration-400 stroke-yellow-400" />
           </div>
           {!isMobile ? (
-            <BentoBox contents={featured} />
+            <BentoBox contents={featured || []} />
           ) : (
-            <MobileBentoBox contents={featured} />
+            <MobileBentoBox contents={featured || []} />
           )}
         </div>
       )}

@@ -227,7 +227,7 @@ export default function IndividualBitePage() {
                 <div className="flex items-center gap-4">
                   {bite.user.image && (
                     <img
-                      src={bite.user.image}
+                      src={bite.user.image || "/placeholder.svg"}
                       alt={bite.user.name}
                       className="w-16 h-16 rounded-full object-cover"
                     />
