@@ -28,7 +28,6 @@ export default function AddImagePage() {
       process.env.NEXT_PUBLIC_BACKEND_URL + "/post/" + creds.session,
       formData,
     );
-    console.log("New image created:", formData);
     alert("Image post created successfully!");
     router.push("/admin");
   };

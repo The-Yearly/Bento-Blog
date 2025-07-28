@@ -14,10 +14,7 @@ export default function AdminPage() {
   const creds = JSON.parse(credsString || "{}");
   const [model, setModel] = useState(false);
   const [deleteContId, setDeleteContId] = useState(0);
-  useEffect(() => {
-    console.log(model);
-  }, [model]);
-  useEffect(() => {
+ useEffect(() => {
     const fetchData = async () => {
       setWait(true);
       const res = await axios.get(
@@ -28,7 +25,6 @@ export default function AdminPage() {
     };
     fetchData();
   }, []);
-  console.log(creds);
   const deleteActivity = async () => {
     if (deleteContId != 0) {
       const res = axios.post(
@@ -199,7 +195,6 @@ export default function AdminPage() {
                     onClick={() => {
                       setModel(true);
                       activity.cont_id && setDeleteContId(activity.cont_id);
-                      console.log("Hi");
                     }}
                     className="px-3 py-1.5 bg-red-100 text-red-600 border-none rounded text-sm cursor-pointer hover:bg-red-200"
                   >
@@ -218,7 +213,7 @@ export default function AdminPage() {
           )}
           {model && (
             <div className="bg-black/60 fixed top-0 left-0 min-h-screen w-full z-50 flex items-center justify-center">
-              <div className="h-[24vh] w-[48vh] bg-white rounded-lg shadow-lg p-5">
+              <div className="h-36 w-96 bg-white rounded-lg shadow-lg p-5">
                 <h2 className="text-lg text-neutral-600 font-semibold mb-4">
                   Are you sure you want to delete this item?
                 </h2>

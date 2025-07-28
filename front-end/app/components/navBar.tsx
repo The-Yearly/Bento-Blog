@@ -14,7 +14,6 @@ const navDic = {
 const navItems = Object.keys(navDic);
 export default function NavBar() {
   const pathName = usePathname();
-  console.log(pathName);
   const [isSideBarOpen, setIsSideBarOpen] = useState(false);
   const [selected, setSelected] = useState(
     navDic[pathName as keyof typeof navDic],

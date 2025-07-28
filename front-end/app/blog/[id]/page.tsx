@@ -136,10 +136,10 @@ export default function IndividualBlogPage() {
                 </div>
               )}
 
-              {blog.user && (
+              {blog.User && (
                 <div className="flex items-center gap-2">
                   <User className="w-4 h-4" />
-                  <span>{blog.user.name}</span>
+                  <span>{blog.User.name}</span>
                 </div>
               )}
 
@@ -193,7 +193,7 @@ export default function IndividualBlogPage() {
                 dangerouslySetInnerHTML={{ __html: blog.desc }}
               />
             </motion.div>
-            {blog.user && (
+            {blog.User && (
               <motion.div
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
@@ -201,16 +201,16 @@ export default function IndividualBlogPage() {
                 className="mt-12 pt-8 border-t border-gray-200"
               >
                 <div className="flex items-center gap-4">
-                  {blog.user.image && (
+                  {blog.User.image && (
                     <img
-                      src={blog.user.image || "/placeholder.svg"}
-                      alt={blog.user.name}
+                      src={blog.User.image || "/placeholder.svg"}
+                      alt={blog.User.name}
                       className="w-12 h-12 rounded-full object-cover"
                     />
                   )}
                   <div>
                     <div className="font-semibold text-gray-900">
-                      {blog.user.name}
+                      {blog.User.name}
                     </div>
                     <div className="text-gray-600 text-sm">Author</div>
                   </div>

@@ -31,6 +31,7 @@ const getBiteBg = (uid: number) => {
 export const BentoCard = ({ activity }: { activity: ActivityType }) => {
   try {
     if (activity.content !== "Bite") {
+      
       return (
         <Link
           href={"/" + activity.content.toLowerCase() + "/" + activity.cont_id}
@@ -82,7 +83,7 @@ export const BentoCard = ({ activity }: { activity: ActivityType }) => {
           >
             <div className="flex items-center mb-3">
               <div className="w-8 h-8 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center text-white font-semibold">
-                {activity.uid}
+                <Image alt="user" width={300} height={300} src={activity.User?.image||"/placeholder.svg"} className="w-full h-full rounded-2xl border-0"/>
               </div>
             </div>
 

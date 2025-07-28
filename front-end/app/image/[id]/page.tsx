@@ -190,10 +190,10 @@ export default function IndividualImagePage() {
                   </div>
                 )}
 
-                {image.user && (
+                {image.User && (
                   <div className="flex items-center gap-3">
                     <User className="w-4 h-4" />
-                    <span>{image.user.name}</span>
+                    <span>{image.User.name}</span>
                   </div>
                 )}
 
@@ -255,7 +255,7 @@ export default function IndividualImagePage() {
                 </motion.div>
               )}
 
-              {image.user && (
+              {image.User && (
                 <motion.div
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
@@ -266,16 +266,16 @@ export default function IndividualImagePage() {
                     Author
                   </h3>
                   <div className="flex items-center gap-4">
-                    {image.user.image && (
+                    {image.User.image && (
                       <img
-                        src={image.user.image || "/placeholder.svg"}
-                        alt={image.user.name}
+                        src={image.User.image || "/placeholder.svg"}
+                        alt={image.User.name}
                         className="w-12 h-12 rounded-full object-cover"
                       />
                     )}
                     <div>
                       <div className="font-semibold text-gray-900">
-                        {image.user.name}
+                        {image.User.name}
                       </div>
                       <div className="text-gray-600 text-sm">Photographer</div>
                     </div>

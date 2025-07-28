@@ -23,12 +23,11 @@ export default function AddBlogPage() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log(formData);
     const res = await axios.post(
       process.env.NEXT_PUBLIC_BACKEND_URL + "/post/" + creds.session,
       formData,
     );
-    console.log("New blog created:", formData);
+    
     alert("Blog post created successfully!");
     router.push("/admin");
   };

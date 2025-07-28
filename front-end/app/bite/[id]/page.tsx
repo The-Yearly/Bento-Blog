@@ -21,7 +21,6 @@ export default function IndividualBitePage() {
       "bg-gradient-to-br from-pink-500 to-rose-500",
       "bg-gradient-to-br from-cyan-500 to-blue-500",
     ];
-    console.log(uid % colors.length);
     return colors[uid % colors.length];
   };
 
@@ -144,10 +143,10 @@ export default function IndividualBitePage() {
                 </div>
               )}
 
-              {bite.user && (
+              {bite.User && (
                 <div className="flex items-center gap-2">
                   <User className="w-4 h-4" />
-                  <span>{bite.user.name}</span>
+                  <span>{bite.User.name}</span>
                 </div>
               )}
 
@@ -214,7 +213,7 @@ export default function IndividualBitePage() {
                 </div>
               </motion.div>
             )}
-            {bite.user && (
+            {bite.User && (
               <motion.div
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
@@ -225,16 +224,16 @@ export default function IndividualBitePage() {
                   About the Author
                 </h3>
                 <div className="flex items-center gap-4">
-                  {bite.user.image && (
+                  {bite.User.image && (
                     <img
-                      src={bite.user.image || "/placeholder.svg"}
-                      alt={bite.user.name}
+                      src={bite.User.image||"/placeholder.svg"}
+                      alt={bite.User.name}
                       className="w-16 h-16 rounded-full object-cover"
                     />
                   )}
                   <div>
                     <div className="text-lg font-semibold text-gray-900">
-                      {bite.user.name}
+                      {bite.User.name}
                     </div>
                     <div className="text-gray-600">Content Creator</div>
                   </div>

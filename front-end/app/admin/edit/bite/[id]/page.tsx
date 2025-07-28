@@ -33,7 +33,6 @@ export default function EditBitePage() {
       );
 
       setFormData(res.data.data[0]);
-      console.log(res.data.data[0]);
       setLoading(false);
     };
 
@@ -42,7 +41,6 @@ export default function EditBitePage() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log("Bite updated:", formData);
     const res = await axios.post(
       process.env.NEXT_PUBLIC_BACKEND_URL + "/update/" + creds.session,
       formData,

@@ -46,7 +46,6 @@ export default function EditImagePage() {
       formData,
     );
 
-    console.log("Image updated:", formData);
     alert("Image post updated successfully!");
     router.push("/admin");
   };

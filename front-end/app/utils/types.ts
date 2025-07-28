@@ -9,7 +9,7 @@ export interface ActivityType {
   likes: number;
   fav: boolean;
   tags: string[];
-  user?: {
+  User?: {
     name: string;
     image: string;
   };

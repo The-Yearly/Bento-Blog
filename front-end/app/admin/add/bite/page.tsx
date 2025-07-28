@@ -27,7 +27,6 @@ export default function AddBitePage() {
       process.env.NEXT_PUBLIC_BACKEND_URL + "/post/" + creds.session,
       formData,
     );
-    console.log("New bite created:", formData);
     alert("Bite created successfully!");
     router.push("/admin");
   };

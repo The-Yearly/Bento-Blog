@@ -41,7 +41,6 @@ export default function EditBlogPage() {
       process.env.NEXT_PUBLIC_BACKEND_URL + "/update/" + creds.session,
       formData,
     );
-    console.log("Blog updated:", formData);
     alert("Blog post updated successfully!");
     router.push("/admin");
   };

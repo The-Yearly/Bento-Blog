@@ -3,7 +3,6 @@ package controllers_v1
 import (
 	"backend/db"
 	"backend/models"
-	"fmt"
 	"net/http"
 	"strconv"
 	"time"
@@ -90,6 +89,7 @@ func GetPosts(ctx *gin.Context) {
 func GetRecents(ctx *gin.Context) {
 	var posts []models.Posts
 	res := db.DB.Model(&posts).Preload("User").Order("time DESC").Find(&posts)
+
 	if res.Error == nil {
 		var post []returnPost
 		for _, g := range posts {
@@ -257,7 +257,6 @@ func Delete(ctx *gin.Context) {
 	if Binderr := ctx.BindJSON(&creds); Binderr != nil {
 		ctx.JSON(403, gin.H{"message": "InValid Data"})
 	}
-	fmt.Println(creds, &creds)
 	if usererr := db.DB.Where("id=?", creds.Uid).First(&User).Error; usererr != nil {
 		ctx.JSON(403, gin.H{"message": "Invalid"})
 	}
@@ -281,7 +280,6 @@ func SignIn(ctx *gin.Context) {
 		ctx.JSON(403, gin.H{"message": "Server Error"})
 		return
 	}
-	fmt.Println(Creds)
 	res := db.DB.Where("email = ?", Creds.Email).First(&User)
 	if res.Error != nil {
 		ctx.JSON(404, gin.H{"message": "User Not Found"})
@@ -289,7 +287,6 @@ func SignIn(ctx *gin.Context) {
 	if User.Password == Creds.Password {
 		token, _ := createToken(User.Email)
 		User.Session = &token
-		fmt.Println(User)
 		db.DB.Save(&User)
 		ctx.JSON(200, gin.H{"message": "Succesfull Login", "token": &token, "uid": User.ID})
 		return
