@@ -3,7 +3,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import localFont from "next/font/local";
 import NavBar from "./components/navBar";
-import bento from  "../public/bento-svgrepo-com.svg"
+import bento from "@/public/bento-svgrepo-com.svg"
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
