@@ -296,3 +296,15 @@ func SignIn(ctx *gin.Context) {
 		return
 	}
 }
+func Like(ctx *gin.Context) {
+	var Post models.Posts
+	id := ctx.Param("id")
+	err := db.DB.Where("id=?", id).First(&Post).Error
+	if err != nil {
+		ctx.JSON(404, gin.H{"message": "Post Not Found"})
+		return
+	}
+	Post.Likes = Post.Likes + 1
+	db.DB.Save(&Post)
+	ctx.JSON(200, gin.H{"message": "Succussfully Changed"})
+}

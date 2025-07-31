@@ -17,4 +17,5 @@ func RegisterRoutes(r *gin.Engine) {
 	router.POST("/update/:session", middleware.SessionMiddleware(), controllers_v1.Update)
 	router.POST("/delete/:id", controllers_v1.Delete)
 	router.POST("/signIn", controllers_v1.SignIn)
+	router.GET("/like/:id", controllers_v1.Like)
 }
