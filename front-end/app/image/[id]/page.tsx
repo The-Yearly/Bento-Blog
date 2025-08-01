@@ -15,13 +15,14 @@ import {
   Eye,
 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
-
+import { likeAction } from "@/app/bite/[id]/page";
 export default function IndividualImagePage() {
   const [image, setImage] = useState<ActivityType | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [isZoomed, setIsZoomed] = useState(false);
   const [imageLoaded, setImageLoaded] = useState(false);
+  const [liked,setLiked]=useState(false)
   const params = useParams();
   const router = useRouter();
 
@@ -198,10 +199,12 @@ export default function IndividualImagePage() {
                 )}
 
                 {image.likes !== undefined && (
-                  <div className="flex items-center gap-3">
-                    <Heart className="w-4 h-4" />
-                    <span>{image.likes} likes</span>
-                  </div>
+                <div className="flex items-center gap-2">
+                  <Heart className={`w-4 h-4 hover:fill-pink-300 ${liked?"fill-pink-400":"fill-none"}`} onClick={
+                    ()=>{setLiked(!liked)
+                      likeAction(image,liked)}}/>
+                  <span>{image.likes} likes</span>
+                </div>
                 )}
 
                 <div className="flex items-center gap-3">

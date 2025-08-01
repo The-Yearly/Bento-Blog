@@ -5,7 +5,15 @@ import { ActivityType } from "@/app/utils/types";
 import axios from "axios";
 import { ArrowLeft, Calendar, Heart, Tag, User } from "lucide-react";
 import { motion } from "framer-motion";
-
+export const likeAction=async(content:ActivityType,liked:boolean)=>{
+  
+  if(liked){
+    content.likes=content.likes-1
+  }else{
+    content.likes=content.likes+1
+  }
+  const rea=axios.post(process.env.NEXT_PUBLIC_BACKEND_URL+"/updateLike",content)
+}
 export default function IndividualBitePage() {
   const [bite, setBite] = useState<ActivityType | null>(null);
   const [loading, setLoading] = useState(true);
@@ -95,15 +103,7 @@ export default function IndividualBitePage() {
       </div>
     );
   }
-  const likeAction=async()=>{
-    setLiked(!liked)
-    if(liked){
-      bite.likes=bite.likes-1
-    }else{
-      bite.likes=bite.likes+1
-    }
-    const rea=axios.post(process.env.NEXT_PUBLIC_BACKEND_URL+"/updateLike",bite)
-  }
+
   return (
     <div className="min-h-screen">
       <div className="max-w-4xl mx-auto px-4 py-8">
@@ -161,7 +161,9 @@ export default function IndividualBitePage() {
 
               {bite.likes !== undefined && (
                 <div className="flex items-center gap-2">
-                  <Heart className={`w-4 h-4 hover:fill-pink-300 ${liked?"fill-pink-400":"fill-none"}`} onClick={likeAction}/>
+                  <Heart className={`w-4 h-4 hover:fill-pink-300 ${liked?"fill-pink-400":"fill-none"}`} onClick={()=>{
+                    setLiked(!liked)
+                    likeAction(bite,liked)}}/>
                   <span>{bite.likes} likes</span>
                 </div>
               )}
