@@ -306,13 +306,14 @@ func UpdateLike(ctx *gin.Context) {
 		ctx.JSON(400, gin.H{"message": "Bad JSON"})
 		return
 	}
-	updateErr := db.DB.Where("id=?", UpdatePost.ID).First(&Post)
+	fmt.Println(UpdatePost.ID)
+	updateErr := db.DB.Where("id=?", UpdatePost.ID).First(&Post).Error
 	if updateErr != nil {
 		ctx.JSON(403, gin.H{"message": "Couldnt Find Post"})
 		return
 	}
 	Post.Likes = UpdatePost.Likes
-	saveErr := db.DB.Save(&Post)
+	saveErr := db.DB.Save(&Post).Error
 	if saveErr != nil {
 		ctx.JSON(500, gin.H{"message": "Failed To Update"})
 		return
