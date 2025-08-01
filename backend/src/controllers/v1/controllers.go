@@ -3,6 +3,7 @@ package controllers_v1
 import (
 	"backend/db"
 	"backend/models"
+	"fmt"
 	"net/http"
 	"strconv"
 	"time"
@@ -296,15 +297,25 @@ func SignIn(ctx *gin.Context) {
 		return
 	}
 }
-func Like(ctx *gin.Context) {
+func UpdateLike(ctx *gin.Context) {
 	var Post models.Posts
-	id := ctx.Param("id")
-	err := db.DB.Where("id=?", id).First(&Post).Error
+	var UpdatePost models.Posts
+	err := ctx.ShouldBindJSON(&UpdatePost)
 	if err != nil {
-		ctx.JSON(404, gin.H{"message": "Post Not Found"})
+		fmt.Println(err.Error())
+		ctx.JSON(400, gin.H{"message": "Bad JSON"})
 		return
 	}
-	Post.Likes = Post.Likes + 1
-	db.DB.Save(&Post)
+	updateErr := db.DB.Where("id=?", UpdatePost.ID).First(&Post)
+	if updateErr != nil {
+		ctx.JSON(403, gin.H{"message": "Couldnt Find Post"})
+		return
+	}
+	Post.Likes = UpdatePost.Likes
+	saveErr := db.DB.Save(&Post)
+	if saveErr != nil {
+		ctx.JSON(500, gin.H{"message": "Failed To Update"})
+		return
+	}
 	ctx.JSON(200, gin.H{"message": "Succussfully Changed"})
 }

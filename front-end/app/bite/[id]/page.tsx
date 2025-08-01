@@ -10,6 +10,7 @@ export default function IndividualBitePage() {
   const [bite, setBite] = useState<ActivityType | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [liked,setLiked]=useState(false)
   const getBiteBg = (uid: number) => {
     const colors = [
       "bg-gradient-to-br from-purple-500 to-pink-500",
@@ -94,7 +95,15 @@ export default function IndividualBitePage() {
       </div>
     );
   }
-
+  const likeAction=async()=>{
+    setLiked(!liked)
+    if(liked){
+      bite.likes=bite.likes-1
+    }else{
+      bite.likes=bite.likes+1
+    }
+    const rea=axios.post(process.env.NEXT_PUBLIC_BACKEND_URL+"/updateLike",bite)
+  }
   return (
     <div className="min-h-screen">
       <div className="max-w-4xl mx-auto px-4 py-8">
@@ -152,7 +161,7 @@ export default function IndividualBitePage() {
 
               {bite.likes !== undefined && (
                 <div className="flex items-center gap-2">
-                  <Heart className="w-4 h-4" />
+                  <Heart className={`w-4 h-4 hover:fill-pink-300 ${liked?"fill-pink-400":"fill-none"}`} onClick={likeAction}/>
                   <span>{bite.likes} likes</span>
                 </div>
               )}
