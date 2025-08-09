@@ -1,0 +1,7 @@
+from  node:24
+WORKDIR /app
+COPY package.json .
+RUN npm i
+COPY . .
+EXPOSE 3000
+CMD npm run dev

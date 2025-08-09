@@ -1,0 +1,14 @@
+services:
+  frontend_app:
+    build:
+      dockerfile: "/front-end/front_end.Dockerfile"
+    ports:
+      - "3000:3000"
+  backend_app:
+      build:
+        dockerfile: "/backend/backend.Dockerfile"
+      ports:
+      - "3001:3001"
+      environment:
+        
+      
