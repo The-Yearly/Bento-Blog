@@ -5,7 +5,7 @@ import { ActivityType } from "@/app/utils/types";
 import axios from "axios";
 import { ArrowLeft, Calendar, Heart, Tag, User } from "lucide-react";
 import { motion } from "framer-motion";
-export const likeAction=async(content:ActivityType,liked:boolean)=>{
+export const LikeAction=async(content:ActivityType,liked:boolean)=>{
   
   if(liked){
     content.likes=content.likes-1
@@ -163,7 +163,7 @@ export default function IndividualBitePage() {
                 <div className="flex items-center gap-2">
                   <Heart className={`w-4 h-4 hover:fill-pink-300 ${liked?"fill-pink-400":"fill-none"}`} onClick={()=>{
                     setLiked(!liked)
-                    likeAction(bite,liked)}}/>
+                    LikeAction(bite,liked)}}/>
                   <span>{bite.likes} likes</span>
                 </div>
               )}

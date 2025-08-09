@@ -5,7 +5,7 @@ import { ActivityType } from "@/app/utils/types";
 import axios from "axios";
 import { ArrowLeft, Calendar, Heart, Tag, User } from "lucide-react";
 import { motion } from "framer-motion";
-import { likeAction } from "@/app/bite/[id]/page";
+import { LikeAction } from "@/app/bite/[id]/page";
 export default function IndividualBlogPage() {
   const [blog, setBlog] = useState<ActivityType | null>(null);
   const [loading, setLoading] = useState(true);
@@ -148,7 +148,7 @@ export default function IndividualBlogPage() {
                 <div className="flex items-center gap-2">
                   <Heart className={`w-4 h-4 hover:fill-pink-300 ${liked?"fill-pink-400":"fill-none"}`} onClick={
                     ()=>{setLiked(!liked)
-                      likeAction(blog,liked)}}/>
+                      LikeAction(blog,liked)}}/>
                   <span>{blog.likes} likes</span>
                 </div>
               )}
