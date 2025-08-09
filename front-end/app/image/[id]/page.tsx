@@ -15,7 +15,7 @@ import {
   Eye,
 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
-import { LikeAction } from "@/app/bite/[id]/page";
+import { LikeAction } from "@/app/utils/likeAction";
 export default function IndividualImagePage() {
   const [image, setImage] = useState<ActivityType | null>(null);
   const [loading, setLoading] = useState(true);

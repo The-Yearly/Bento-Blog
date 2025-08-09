@@ -5,7 +5,7 @@ import { ActivityType } from "@/app/utils/types";
 import axios from "axios";
 import { ArrowLeft, Calendar, Heart, Tag, User } from "lucide-react";
 import { motion } from "framer-motion";
-import { LikeAction } from "@/app/bite/[id]/page";
+import { LikeAction } from "@/app/utils/likeAction";
 export default function IndividualBlogPage() {
   const [blog, setBlog] = useState<ActivityType | null>(null);
   const [loading, setLoading] = useState(true);

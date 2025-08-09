@@ -5,15 +5,7 @@ import { ActivityType } from "@/app/utils/types";
 import axios from "axios";
 import { ArrowLeft, Calendar, Heart, Tag, User } from "lucide-react";
 import { motion } from "framer-motion";
-export async  function LikeAction(content:ActivityType,liked:boolean){
-  
-  if(liked){
-    content.likes=content.likes-1
-  }else{
-    content.likes=content.likes+1
-  }
-  const rea=axios.post(process.env.NEXT_PUBLIC_BACKEND_URL+"/updateLike",content)
-}
+import { LikeAction } from "@/app/utils/likeAction";
 export default function IndividualBitePage() {
   const [bite, setBite] = useState<ActivityType | null>(null);
   const [loading, setLoading] = useState(true);
