@@ -5,7 +5,7 @@ import { ActivityType } from "@/app/utils/types";
 import axios from "axios";
 import { ArrowLeft, Calendar, Heart, Tag, User } from "lucide-react";
 import { motion } from "framer-motion";
-export const LikeAction=async(content:ActivityType,liked:boolean)=>{
+export async  function LikeAction(content:ActivityType,liked:boolean){
   
   if(liked){
     content.likes=content.likes-1
