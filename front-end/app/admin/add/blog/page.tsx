@@ -7,7 +7,7 @@ import { ActivityType } from "@/app/utils/types";
 import axios from "axios";
 import Cookies from "js-cookie";
 import { toast, ToastContainer } from "react-toastify";
-import IndividualBlogPage, { Blog } from "@/app/blog/[id]/page";
+import { BlogCard } from "@/app/blog/[id]/components/blogCard";
 export default function AddBlogPage() {
   const router = useRouter();
   const credsString = Cookies.get("creds");
@@ -144,7 +144,7 @@ export default function AddBlogPage() {
       </form>
       <div>
         Preview
-        <Blog blog={formData} />
+        <BlogCard blog={formData} />
       </div>
     </div>
   );

@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import { useParams, useRouter } from "next/navigation";
 import Link from "next/link";
 import axios from "axios";
-import { Blog } from "@/app/blog/[id]/page";
+import { BlogCard } from "@/app/blog/[id]/components/blogCard";
 import Cookies from "js-cookie";
 import { ActivityType } from "@/app/utils/types";
 export default function EditBlogPage() {
@@ -157,7 +157,7 @@ export default function EditBlogPage() {
       </form>
       <div>
         Preview
-        <Blog blog={formData} />
+        <BlogCard blog={formData} />
       </div>
     </div>
   );
