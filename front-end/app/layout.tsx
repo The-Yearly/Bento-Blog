@@ -3,8 +3,8 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import localFont from "next/font/local";
 import NavBar from "./components/navBar";
-import bento from "@/public/bento-svgrepo-com.svg"
-import { Analytics } from "@vercel/analytics/next"
+import bento from "@/public/bento-svgrepo-com.svg";
+import { Analytics } from "@vercel/analytics/next";
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
@@ -21,9 +21,9 @@ const nunitoSans = localFont({
 export const metadata: Metadata = {
   title: "Bento Blog",
   description: "Welcome To My Little Bento World",
-  icons:{
-    icon:"/bento-svgrepo-com.svg"
-  }
+  icons: {
+    icon: "/bento-svgrepo-com.svg",
+  },
 };
 
 export default function RootLayout({
@@ -39,7 +39,7 @@ export default function RootLayout({
         <>
           <NavBar />
           {children}
-          <Analytics/>
+          <Analytics />
         </>
       </body>
     </html>

@@ -10,7 +10,7 @@ export default function IndividualBitePage() {
   const [bite, setBite] = useState<ActivityType | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const [liked,setLiked]=useState(false)
+  const [liked, setLiked] = useState(false);
   const getBiteBg = (uid: number) => {
     const colors = [
       "bg-gradient-to-br from-purple-500 to-pink-500",
@@ -153,9 +153,13 @@ export default function IndividualBitePage() {
 
               {bite.likes !== undefined && (
                 <div className="flex items-center gap-2">
-                  <Heart className={`w-4 h-4 hover:fill-pink-300 ${liked?"fill-pink-400":"fill-none"}`} onClick={()=>{
-                    setLiked(!liked)
-                    LikeAction(bite,liked)}}/>
+                  <Heart
+                    className={`w-4 h-4 hover:fill-pink-300 ${liked ? "fill-pink-400" : "fill-none"}`}
+                    onClick={() => {
+                      setLiked(!liked);
+                      LikeAction(bite, liked);
+                    }}
+                  />
                   <span>{bite.likes} likes</span>
                 </div>
               )}
@@ -229,7 +233,7 @@ export default function IndividualBitePage() {
                 <div className="flex items-center gap-4">
                   {bite.User.image && (
                     <img
-                      src={bite.User.image||"/placeholder.svg"}
+                      src={bite.User.image || "/placeholder.svg"}
                       alt={bite.User.name}
                       className="w-16 h-16 rounded-full object-cover"
                     />

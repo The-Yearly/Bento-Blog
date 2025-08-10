@@ -1,5 +1,5 @@
 @import "tailwindcss";
-
+@plugin "@tailwindcss/typography";
 @font-face {
   font-family: "Nunito Sans";
   src: url("/Fonts/NunitoSans-VariableFont.ttf") format("truetype");

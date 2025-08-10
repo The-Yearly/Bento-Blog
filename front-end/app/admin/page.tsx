@@ -14,7 +14,7 @@ export default function AdminPage() {
   const creds = JSON.parse(credsString || "{}");
   const [model, setModel] = useState(false);
   const [deleteContId, setDeleteContId] = useState(0);
- useEffect(() => {
+  useEffect(() => {
     const fetchData = async () => {
       setWait(true);
       const res = await axios.get(

@@ -93,8 +93,8 @@ export default function ContactMe() {
               Get In Touch
             </h1>
             <p className="text-xl md:text-2xl text-gray-300 leading-relaxed max-w-xl mx-auto">
-              I&apos;m a passionate developer who loves creating digital experiences
-              and connecting with fellow creators.
+              I&apos;m a passionate developer who loves creating digital
+              experiences and connecting with fellow creators.
             </p>
           </div>
           <div className="grid gap-4 md:gap-6">
