@@ -63,97 +63,98 @@ export default function BentoImageGrid({
     return index < contents.length ? contents[index] : null;
   };
   return (
-    <div>
-      <div className="mx-auto px-4 py-8">
-        <div className="max-w-6xl mx-auto overflow-hidden rounded-xl">
-          <div className="grid mt-2 grid-cols-1 gap-x-1 md:grid-cols-4">
-            {contents.map((content, i) => {
-              const bite = (i + 1) % 9;
-              const elements = [];
-              if (bite === 1) {
-                const secondCapture = safeGetCapture(i + 4);
-                elements.push(
-                  <div
-                    className="flex mt-2 gap-y-2 flex-col col-span-1"
-                    key={`bite-${i}`}
-                  >
-                    <div className="aspect-[10/16]">
-                      <BentoImageCard activity={content} />
-                    </div>
-                    {secondCapture && (
-                      <div className="aspect-[10/16]">
-                        <BentoImageCard activity={secondCapture} />
-                      </div>
-                    )}
-                  </div>,
-                );
-              } else if (bite === 2) {
-                const capture1 = safeGetCapture(i + 1);
-                const capture4 = safeGetCapture(i + 4);
-                const capture6 = safeGetCapture(i + 6);
-                const capture7 = safeGetCapture(i + 7);
-                elements.push(
-                  <div
-                    className="col-span-2 mt-2 flex gap-y-2 flex-col"
-                    key={`bite-${i}`}
-                  >
-                    <div className="flex gap-x-1">
-                      <div className="aspect-[12/10] w-full">
+      <div>
+        <div className="mx-auto px-4 py-8">
+          <div className="max-w-6xl mx-auto overflow-hidden rounded-xl">
+            <div className="grid mt-2 grid-cols-1 gap-x-1 md:grid-cols-4">
+              {contents.map((content, i) => {
+                const bite = (i + 1) % 9;
+                const elements = [];
+                if (bite === 1) {
+                  const secondCapture = safeGetCapture(i + 4);
+                  elements.push(
+                    <div
+                      className="flex mt-2 gap-y-2 flex-col col-span-1"
+                      key={`bite-${i}`}
+                    >
+                      <div className="aspect-[10/16] h-full">
                         <BentoImageCard activity={content} />
                       </div>
-                      {capture1 && (
-                        <div className="aspect-[12/10] w-full">
-                          <BentoImageCard activity={capture1} />
+                      {secondCapture && (
+                        <div className="aspect-[10/16] h-full">
+                          <BentoImageCard activity={secondCapture} />
                         </div>
                       )}
-                    </div>
-                    {capture4 && (
-                      <div className="aspect-[18/15]">
-                        <BentoImageCard activity={capture4} />
-                      </div>
-                    )}
-                    {(capture6 || capture7) && (
-                      <div className="flex relative gap-x-1">
-                        {capture6 && (
-                          <div className="absolute aspect-[20/11] w-[60%]">
-                            <BentoImageCard activity={capture6} />
+
+                    </div>,
+                  );
+                } else if (bite === 2) {
+                  const capture1 = safeGetCapture(i + 1);
+                  const capture4 = safeGetCapture(i + 4);
+                  const capture6 = safeGetCapture(i + 6);
+                  const capture7 = safeGetCapture(i + 7);
+                  elements.push(
+                    <div
+                      className="col-span-2 mt-2 flex gap-y-2 flex-col"
+                      key={`bite-${i}`}
+                    >
+                      <div className="flex gap-x-1">
+                        <div className="aspect-[12/10] w-full">
+                          <BentoImageCard activity={content} />
+                        </div>
+                        {capture1 && (
+                          <div className="aspect-[12/10] w-full">
+                            <BentoImageCard activity={capture1} />
                           </div>
                         )}
-                        {capture7 && (
-                          <div className="md:left-[51%] lg:left-[54%] ml-10 aspect-[20/7] relative w-[98%]">
-                            <BentoImageCard activity={capture7} />
-                          </div>
-                        )}
-                      </div>
-                    )}
-                  </div>,
-                );
-              } else if (bite === 4) {
-                const capture4 = safeGetCapture(i + 4);
-                elements.push(
-                  <div className="col-span-1 mt-2" key={`bite-${i}`}>
-                    <div className="flex flex-col gap-y-2">
-                      <div className="aspect-[9/16]">
-                        <BentoImageCard activity={content} />
                       </div>
                       {capture4 && (
-                        <div className="aspect-[19/14]">
+                        <div className="aspect-[18/15] max-h-[52vh]">
                           <BentoImageCard activity={capture4} />
                         </div>
                       )}
-                    </div>
-                  </div>,
-                );
-              }
+                      {(capture6 || capture7) && (
+                        <div className="flex relative gap-x-1">
+                          {capture6 && (
+                            <div className="absolute aspect-[20/11] w-[60%]">
+                              <BentoImageCard activity={capture6} />
+                            </div>
+                          )}
+                          {capture7 && (
+                            <div className="md:left-[51%] lg:left-[54%] ml-10 aspect-[20/7] relative w-[98%]">
+                              <BentoImageCard activity={capture7} />
+                            </div>
+                          )}
+                        </div>
+                      )}
+                    </div>,
+                  );
+                } else if (bite === 4) {
+                  const capture4 = safeGetCapture(i + 4);
+                  elements.push(
+                    <div className="col-span-1 mt-2" key={`bite-${i}`}>
+                      <div className="flex flex-col gap-y-2">
+                        <div className="aspect-[9/16]">
+                          <BentoImageCard activity={content} />
+                        </div>
+                        {capture4 && (
+                          <div className="aspect-[19/14] max-h-[25vh]">
+                            <BentoImageCard activity={capture4} />
+                          </div>
+                        )}
+                      </div>
+                    </div>,
+                  );
+                }
 
-              return elements;
-            })}
+                return elements;
+              })}
+            </div>
           </div>
         </div>
       </div>
-    </div>
-  );
-}
+    );
+  }
 export const MobileBentoBox = ({ contents }: { contents: ActivityType[] }) => {
   if (contents) {
     return (
