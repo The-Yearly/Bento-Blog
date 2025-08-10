@@ -124,17 +124,13 @@ export default function IndividualImagePage() {
             className="lg:col-span-2"
           >
             <div className="bg-white rounded-xl shadow-lg overflow-hidden">
-              <div className="relative bg-black/50 backdrop-blur-2xl">
+              <div className="relative bg-black/50 backdrop-blur-2xl h-[70vh] lg:h-[80vh] overflow-hidden">
                 <motion.img
                   src={image.image || "/placeholder.svg"}
                   alt={image.title}
-                  className={`w-full transition-transform duration-300 cursor-pointer ${
+                  className={`w-full h-full object-cover transition-transform duration-300 cursor-pointer ${
                     isZoomed ? "scale-150 origin-center" : "scale-100"
                   }`}
-                  style={{
-                    maxHeight: isZoomed ? "none" : "70vh",
-                    objectFit: "contain",
-                  }}
                   onClick={toggleZoom}
                   onLoad={() => setImageLoaded(true)}
                   initial={{ opacity: 0 }}

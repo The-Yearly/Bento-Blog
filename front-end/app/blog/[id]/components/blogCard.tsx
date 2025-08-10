@@ -1,22 +1,22 @@
 import { LikeAction } from "@/app/utils/likeAction";
 import { useState } from "react";
-import {motion} from "framer-motion"
+import { motion } from "framer-motion";
 import { ActivityType } from "@/app/utils/types";
-import {Calendar, Heart, Tag, User } from "lucide-react";
+import { Calendar, Heart, Tag, User } from "lucide-react";
 export const BlogCard = ({ blog }: { blog: ActivityType }) => {
   const [liked, setLiked] = useState(false);
   const formatDate = (dateString: string) => {
-  try {
-    const date = new Date(dateString);
-    return date.toLocaleDateString("en-US", {
-      year: "numeric",
-      month: "long",
-      day: "numeric",
-    });
-  } catch {
-    return dateString;
-  }
-};
+    try {
+      const date = new Date(dateString);
+      return date.toLocaleDateString("en-US", {
+        year: "numeric",
+        month: "long",
+        day: "numeric",
+      });
+    } catch {
+      return dateString;
+    }
+  };
 
   return (
     <>
