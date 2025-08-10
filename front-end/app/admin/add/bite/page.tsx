@@ -51,12 +51,12 @@ export default function AddBitePage() {
             onChange={(e) => setFormData({ ...formData, desc: e.target.value })}
             required
             rows={4}
-            maxLength={120}
+            maxLength={180}
             placeholder="Share your thoughts... (max 120 characters)"
             className="w-full p-3 border border-gray-300 rounded text-base resize-y"
           />
           <div className="text-right text-sm text-gray-600 mt-1">
-            {formData.desc.length}/120
+            {formData.desc.length}/180
           </div>
         </div>
 
