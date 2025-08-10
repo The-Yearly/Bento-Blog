@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { ActivityType } from "../utils/types";
 import { BentoBox } from "./BentoGrid";
 import axios from "axios";
-import BentoImageGrid from "./BenotImageGrid";
+import{ MobileBentoBox } from "./BenotImageGrid";
 export default function RecentActivity() {
   const [recentActivityData, setRecentActivity] = useState<ActivityType[]>([]);
   const [wait, setWait] = useState(false);
@@ -36,7 +36,7 @@ export default function RecentActivity() {
         {!isMobile ? (
           <BentoBox contents={recentActivityData.slice(0, 10)} />
         ) : (
-          <BentoImageGrid contents={recentActivityData.slice(0, 10)} />
+          <MobileBentoBox contents={recentActivityData.slice(0, 10)} />
         )}
       </div>
     );
