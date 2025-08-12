@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { ActivityType } from "../utils/types";
 import { BentoBox } from "./BentoGrid";
 import axios from "axios";
-import{ MobileBentoBox } from "./BenotImageGrid";
+import { MobileBentoBox } from "./BenotImageGrid";
 export default function RecentActivity() {
   const [recentActivityData, setRecentActivity] = useState<ActivityType[]>([]);
   const [wait, setWait] = useState(false);
@@ -19,13 +19,20 @@ export default function RecentActivity() {
   useEffect(() => {
     const fetchData = async () => {
       setWait(true);
-      const res = await axios.get(
-        process.env.NEXT_PUBLIC_BACKEND_URL + "/getRecentActivity",
-      );
-      setRecentActivity(res.data.data);
-      setWait(false);
+      try {
+        const res = await axios.get(
+          process.env.NEXT_PUBLIC_BACKEND_URL + "/getRecentActivity",
+        );
+        setRecentActivity(res.data.data);
+      } catch (err) {
+        console.error("Error fetching data:", err);
+      } finally {
+        setWait(false);
+      }
     };
     fetchData();
+    const intervalId = setInterval(fetchData, 600000);
+    return () => clearInterval(intervalId);
   }, []);
   if (!wait && recentActivityData) {
     return (
