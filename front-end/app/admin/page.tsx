@@ -148,17 +148,19 @@ export default function AdminPage() {
                         <span className="text-amber-500">⭐</span>
                       )}
                     </div>
-                    <h3 className="m-0 mb-2 text-neutral-600 text-xl font-semibold">
+
+                    <h3 className="m-0 mb-2 text-neutral-600 text-xl font-semibold line-clamp-2">
                       {activity.title}
                     </h3>
                     {activity.desc && (
-                      <p
+                      <div
+                        className="m-0 mb-2.5 text-gray-600 leading-relaxed line-clamp-3"
                         dangerouslySetInnerHTML={{ __html: activity.desc }}
-                        className="m-0 mb-2.5 text-gray-600 leading-relaxed"
-                      ></p>
+                      />
                     )}
+
                     <div className="flex flex-wrap gap-1 mb-2.5">
-                      {activity.tags.map((tag, index) => (
+                      {activity.tags.slice(0, 3).map((tag, index) => (
                         <span
                           key={index}
                           className="px-2 py-0.5 bg-gray-100 text-gray-700 rounded-xl text-xs"
@@ -166,7 +168,13 @@ export default function AdminPage() {
                           #{tag}
                         </span>
                       ))}
+                      {activity.tags.length > 3 && (
+                        <span className="px-2 py-0.5 bg-gray-100 text-gray-500 rounded-xl text-xs">
+                          +{activity.tags.length - 3} more
+                        </span>
+                      )}
                     </div>
+
                     <div className="text-sm text-gray-500">
                       {activity.time && formatDate(activity.time)} •{" "}
                       {activity.likes} likes
