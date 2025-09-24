@@ -82,7 +82,7 @@ export default function NavBar() {
                 damping: 30,
                 duration: 0.4,
               }}
-              className="fixed bg-gradient-to-b from-gray-900 via-black to-gray-900 w-72 h-full right-0 shadow-2xl border-l border-gray-800"
+              className="fixed bg-black/50 w-72 h-full right-0 shadow-2xl border-l border-gray-800"
             >
               <motion.button
                 initial={{ opacity: 0, rotate: -90 }}
@@ -141,7 +141,7 @@ export default function NavBar() {
                       onClick={() => setSelected("admin")}
                       whileHover={{ scale: 1.05 }}
                       whileTap={{ scale: 0.95 }}
-                      className="flex items-center space-x-3 p-3 rounded-lg bg-gradient-to-r from-gray-800/50 to-gray-700/50 hover:from-gray-700/50 hover:to-gray-600/50 transition-all duration-300 border border-gray-700/50"
+                      className="flex items-center space-x-3 p-3 rounded-lg bg-black/60 hover:to-gray-600/50 transition-all duration-300 border border-gray-700/50"
                     >
                       <UserCircle
                         strokeWidth={1.1}
