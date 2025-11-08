@@ -47,21 +47,19 @@ export default function RecentActivity() {
         )}
       </div>
     );
-  }else{
-    return(
+  } else {
+    return (
       <BentoBox
-    contents={Array(3).fill({
-            title: 'Loading',
-            desc: '...',
-            content: '',
-            likes: 0,
-            fav: false,
-            tags: [],
-            User: { name: '', image: '' },
-          })
-    }
-  
-  />
-    )
+        contents={Array(3).fill({
+          title: "Loading",
+          desc: "...",
+          content: "",
+          likes: 0,
+          fav: false,
+          tags: [],
+          User: { name: "", image: "" },
+        })}
+      />
+    );
   }
 }

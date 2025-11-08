@@ -5,6 +5,7 @@ import localFont from "next/font/local";
 import NavBar from "./components/navBar";
 import bento from "@/public/bento-svgrepo-com.svg";
 import { Analytics } from "@vercel/analytics/next";
+import Footer from "./components/footer";
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
@@ -39,6 +40,7 @@ export default function RootLayout({
         <>
           <NavBar />
           {children}
+          <Footer />
           <Analytics />
         </>
       </body>

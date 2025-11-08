@@ -30,44 +30,42 @@ export default function Hero() {
   }, []);
   return (
     <>
-{!wait ? (
-  <div className="mt-5 max-w-7xl mr-5">
-    <div className="flex items-center">
-      <p className="text-2xl tracking-widest xl pl-5 pr-3">Featured</p>
-      <Star className="fill-yellow-400 hover:scale-125 transition-transform duration-400 stroke-yellow-400" />
-    </div>
-    {!isMobile ? (
-      <BentoBox contents={featured || []} />
-    ) : (
-      <MobileBentoBox contents={featured || []} />
-    )}
-  </div>
-) : (
-  <div className="mt-5 max-w-7xl mr-5">
-  <div className="flex items-center">
-    <p className="text-2xl tracking-widest xl pl-5 pr-3">Featured</p>
-    <Star className="fill-yellow-400 hover:scale-125 transition-transform duration-400 stroke-yellow-400" />
-  </div>
+      {!wait ? (
+        <div className="mt-5 max-w-7xl mr-5">
+          <div className="flex items-center">
+            <p className="text-2xl tracking-widest xl pl-5 pr-3">Featured</p>
+            <Star className="fill-yellow-400 hover:scale-125 transition-transform duration-400 stroke-yellow-400" />
+          </div>
+          {!isMobile ? (
+            <BentoBox contents={featured || []} />
+          ) : (
+            <MobileBentoBox contents={featured || []} />
+          )}
+        </div>
+      ) : (
+        <div className="mt-5 max-w-7xl mr-5">
+          <div className="flex items-center">
+            <p className="text-2xl tracking-widest xl pl-5 pr-3">Featured</p>
+            <Star className="fill-yellow-400 hover:scale-125 transition-transform duration-400 stroke-yellow-400" />
+          </div>
 
-  <BentoBox
-    contents={
-      !wait
-        ? featured || []
-        : Array(3).fill({
-            title: 'Loading',
-            desc: '...',
-            content: '',
-            likes: 0,
-            fav: false,
-            tags: [],
-            User: { name: '', image: '' },
-          })
-    }
-  
-  />
-</div>
-)}
-
+          <BentoBox
+            contents={
+              !wait
+                ? featured || []
+                : Array(3).fill({
+                    title: "Loading",
+                    desc: "...",
+                    content: "",
+                    likes: 0,
+                    fav: false,
+                    tags: [],
+                    User: { name: "", image: "" },
+                  })
+            }
+          />
+        </div>
+      )}
     </>
   );
 }
