@@ -20,7 +20,7 @@ export default function AdminSignInPage() {
     setIsLoading(true);
     let res;
     try {
-      const res = await axios.put(
+      const res = await axios.post(
         process.env.NEXT_PUBLIC_BACKEND_URL + "/signIn",
         formData,
       );
@@ -31,8 +31,8 @@ export default function AdminSignInPage() {
       );
       router.push("/admin");
     } catch (err) {
+      console.log(err)
       if (axios.isAxiosError(err)) {
-        console.log(err)
         toast.warn("Axios error:", err.response?.data || err.message);
       } else {
         console.log("Unexpected error:", err);
